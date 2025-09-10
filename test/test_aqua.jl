@@ -1,12 +1,12 @@
 module TestAqua
 
 using Aqua
-using Banners
+using MultidimensionalSparseArrays
 using Test
 
 @testset "Aqua" begin
-    Aqua.test_ambiguities(Banners, recursive = false)
-    Aqua.test_all(Banners, ambiguities = false)
+    Aqua.test_ambiguities(MultidimensionalSparseArrays, recursive = false)
+    Aqua.test_all(MultidimensionalSparseArrays, ambiguities = false)
     return nothing
 end
 
