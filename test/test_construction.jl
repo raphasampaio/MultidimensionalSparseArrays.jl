@@ -36,6 +36,18 @@ using Test
     @test E[3, 1] == 2
     @test E[3, 3] == 4
     @test nnz(E) == 4  # Only non-zero elements stored
+    
+    # Array-like constructor with undef
+    F = SparseArray{Float64, 2}(undef, 2, 3)
+    @test size(F) == (2, 3)
+    @test eltype(F) == Float64
+    @test nnz(F) == 0
+    @test F.default_value == 0.0
+    
+    G = SparseArray{Int, 3}(undef, (2, 2, 2))
+    @test size(G) == (2, 2, 2)
+    @test eltype(G) == Int
+    @test nnz(G) == 0
 end
 
 end

@@ -38,6 +38,13 @@ SparseArray{T}(dims::NTuple{N, Int}, default_value::T = zero(T)) where {T, N} =
 SparseArray{T}(dims::Vararg{Int, N}) where {T, N} =
     SparseArray{T, N}(dims, zero(T))
 
+# Array-like constructor: SparseArray{T, N}(undef, dims...)
+SparseArray{T, N}(::UndefInitializer, dims::Vararg{Int, N}) where {T, N} =
+    SparseArray{T, N}(dims, zero(T))
+
+SparseArray{T, N}(::UndefInitializer, dims::NTuple{N, Int}) where {T, N} =
+    SparseArray{T, N}(dims, zero(T))
+
 # Constructor from dense array
 function SparseArray(A::AbstractArray{T, N}) where {T, N}
     sparse_array = SparseArray{T, N}(size(A))
