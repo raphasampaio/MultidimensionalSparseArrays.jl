@@ -14,7 +14,7 @@ using Test
     B = SparseArray{Int, 1}((5,))
     B[3] = 42
     @test B[3] == 42
-    @test B[1] == 0
+    @test_throws BoundsError B[1]  # Unset index throws error
     @test nnz(B) == 1
 
     # Large sparse array

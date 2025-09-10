@@ -41,19 +41,19 @@ using Test
     @testset "dropstored! and compress!" begin
         A = SparseArray{Float64, 2}((3, 3))
         A[1, 1] = 5.0
-        A[1, 2] = 0.0  # This equals default value
+        A[1, 2] = 0.0  # This is stored like any other value
         A[2, 1] = 3.0
-        A[2, 2] = 0.0  # This equals default value
+        A[2, 2] = 0.0  # This is stored like any other value
         A[3, 3] = 7.0
         
-        # Initially should only have non-default values stored (0.0 values are not stored)
-        @test nnz(A) == 3
+        # All set values are stored, including zeros
+        @test nnz(A) == 5
         
-        # Compress should not change anything since default values are already not stored
+        # Compress should remove stored zeros
         compress!(A)
         @test nnz(A) == 3
         @test A[1, 1] == 5.0
-        @test A[1, 2] == 0.0  # Still accessible
+        @test_throws BoundsError A[1, 2]  # Should be removed by compress!
         @test A[2, 1] == 3.0
         @test A[3, 3] == 7.0
         
@@ -67,8 +67,8 @@ using Test
         dropstored!(A, 999.0)
         @test nnz(A) == 1  # Only A[2,1] should remain
         @test A[2, 1] == 3.0
-        @test A[1, 1] == 0.0  # Should return to default
-        @test A[3, 3] == 0.0  # Should return to default
+        @test_throws BoundsError A[1, 1]  # Should be removed
+        @test_throws BoundsError A[3, 3]  # Should be removed
     end
     
     @testset "Large Array Performance" begin
@@ -168,32 +168,8 @@ using Test
         end
     end
     
-    @testset "Memory Usage with Different Default Values" begin
-        # Test arrays with different default values
-        A_zero = SparseArray{Int, 2}((10, 10), 0)
-        A_one = SparseArray{Int, 2}((10, 10), 1)
-        
-        # Fill with default values - should not increase storage
-        fill!(A_zero, 0)
-        fill!(A_one, 1)
-        
-        @test nnz(A_zero) == 0
-        @test nnz(A_one) == 0
-        
-        # Add non-default values
-        A_zero[1, 1] = 5
-        A_one[1, 1] = 5
-        
-        @test nnz(A_zero) == 1
-        @test nnz(A_one) == 1
-        
-        # Set to default values - should remove from storage
-        A_zero[1, 1] = 0
-        A_one[1, 1] = 1
-        
-        @test nnz(A_zero) == 0
-        @test nnz(A_one) == 0
-    end
+    # Note: Default value tests removed since the new architecture 
+    # doesn't support default values - all set values are stored
     
     @testset "Stress Test with Many Operations" begin
         A = SparseArray{Float64, 2}((50, 50))

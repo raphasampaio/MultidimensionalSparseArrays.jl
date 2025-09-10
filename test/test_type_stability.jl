@@ -5,6 +5,7 @@ using Test
 
 @testset "Type Stability" begin
     A = SparseArray{Float64, 2}((2, 2))
+    A[1, 1] = 5.0  # Set a value first
 
     # Test that operations return correct types
     @test typeof(A[1, 1]) == Float64

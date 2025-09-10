@@ -11,7 +11,7 @@ using Test
 
     @test A[1, 1, 1] == 1.0
     @test A[2, 2, 2] == 8.0
-    @test A[1, 2, 1] == 0.0
+    @test_throws BoundsError A[1, 2, 1]  # Unset index throws error
     @test nnz(A) == 2
 
     # 4D array

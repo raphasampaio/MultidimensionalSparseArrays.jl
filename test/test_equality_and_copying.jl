@@ -31,7 +31,7 @@ using Test
     # Modify copy shouldn't affect original
     D[3, 3] = 15
     @test A != D
-    @test A[3, 3] == 0
+    @test !hasindex(A, 3, 3)  # A doesn't have this index
     @test D[3, 3] == 15
 end
 

@@ -14,14 +14,15 @@ using Test
     @test size(A, 1) == 2
     @test size(A, 2) == 3
 
-    # Iteration
+    # Iteration over stored values only
     values = collect(A)
-    expected = [10 0 0; 0 20 0]  # 2D array layout (column-major)
-    @test values == expected
+    expected_stored = [10, 20]  # Only stored values
+    @test Set(values) == Set(expected_stored)
+    @test length(values) == 2
 
-    # Test flat iteration using linear indexing
-    flat_values = [A[CartesianIndices(A)[i]] for i in 1:length(A)]
-    expected_flat = [10, 0, 0, 20, 0, 0]  # Column-major order
-    @test flat_values == expected_flat
+    # Test iteration over stored indices only
+    stored_values = [A[idx] for idx in stored_indices(A)]
+    @test Set(stored_values) == Set([10, 20])
+    @test length(stored_values) == 2
 end
 end

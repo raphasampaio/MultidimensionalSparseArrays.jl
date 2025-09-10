@@ -11,12 +11,12 @@ using Test
     @test size(B) == size(A)
     @test eltype(B) == eltype(A)
     @test nnz(B) == 0  # Should be empty
-    @test B.default_value == A.default_value
+    # Similar arrays start empty
 
     C = similar(A, Int)
     @test size(C) == size(A)
     @test eltype(C) == Int
     @test nnz(C) == 0
-    @test C.default_value == 0
+    # Similar arrays start empty
 end
 end

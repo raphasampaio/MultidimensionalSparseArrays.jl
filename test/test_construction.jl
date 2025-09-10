@@ -9,12 +9,16 @@ using Test
     @test size(A) == (3, 4)
     @test eltype(A) == Float64
     @test nnz(A) == 0
-    @test A.default_value == 0.0
-
-    # Construction with custom default value
-    B = SparseArray{Int, 2}((2, 2), -1)
-    @test B.default_value == -1
-    @test B[1, 1] == -1  # Should return default value
+    
+    # Test that unset indices throw errors
+    @test_throws BoundsError A[1, 1]
+    
+    # Test basic functionality
+    A[1, 1] = 5.0
+    @test A[1, 1] == 5.0
+    @test nnz(A) == 1
+    @test hasindex(A, 1, 1)
+    @test !hasindex(A, 1, 2)
 
     # Convenience constructors
     C = SparseArray{Float64}((3, 3))
@@ -30,9 +34,9 @@ using Test
     E = SparseArray(dense)
     @test size(E) == (3, 3)
     @test E[1, 1] == 1
-    @test E[1, 2] == 0
+    @test !hasindex(E, 1, 2)  # Zero values not stored
     @test E[1, 3] == 3
-    @test E[2, 1] == 0
+    @test !hasindex(E, 2, 1)
     @test E[3, 1] == 2
     @test E[3, 3] == 4
     @test nnz(E) == 4  # Only non-zero elements stored
@@ -42,7 +46,7 @@ using Test
     @test size(F) == (2, 3)
     @test eltype(F) == Float64
     @test nnz(F) == 0
-    @test F.default_value == 0.0
+    # Array starts empty - no values stored
     
     G = SparseArray{Int, 3}(undef, (2, 2, 2))
     @test size(G) == (2, 2, 2)

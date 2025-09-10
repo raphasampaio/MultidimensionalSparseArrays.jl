@@ -10,9 +10,10 @@ using Test
         @test size(A) == (3, 4)
         @test eltype(A) == Int
         @test nnz(A) == 0
-        @test A.default_value == 0
-        @test A[1, 1] == 0
-        @test A[3, 4] == 0
+        # spzeros creates empty sparse array - no values stored initially
+        @test !hasindex(A, 1, 1)
+        @test !hasindex(A, 3, 4)
+        @test_throws BoundsError A[1, 1]
         
         # Test with Float64 (default type)
         B = spzeros(2, 3)
@@ -67,7 +68,8 @@ using Test
         # Test filling with zero (should result in empty sparse array)
         B = spfill(0.0, 3, 3)
         @test nnz(B) == 0
-        @test all(B[i, j] == 0.0 for i in 1:3, j in 1:3)
+        # Sparse array with zeros is empty, indices are not accessible
+        @test !hasindex(B, 1, 1)
         
         # Test with different types
         C = spfill(2.5, 2, 2)
@@ -91,9 +93,9 @@ using Test
         @test nnz(A) == 9  # All positions should be stored
         @test all(A[i, j] == 7 for i in 1:3, j in 1:3)
         
-        # Fill with default value (should clear all)
+        # Fill with zero (stores zero at all positions)
         fill!(A, 0)
-        @test nnz(A) == 0
+        @test nnz(A) == 9  # All positions now store zero
         @test all(A[i, j] == 0 for i in 1:3, j in 1:3)
         
         # Test return value
@@ -117,8 +119,8 @@ using Test
         B = SparseArray(dense_noisy, atol=1e-14)
         @test nnz(B) == 4  # Small values should be treated as zero
         @test B[1, 1] == 1.0
-        @test B[1, 2] == 0.0  # 1e-15 should be treated as zero
-        @test B[2, 1] == 0.0  # 1e-16 should be treated as zero
+        @test !hasindex(B, 1, 2)  # 1e-15 should be treated as zero (not stored)
+        @test !hasindex(B, 2, 1)  # 1e-16 should be treated as zero (not stored)
         
         # Test with larger tolerance
         dense_approx = [1.0 0.001 3.0; 0.0005 0.0 0.0; 2.0 0.0 4.0]

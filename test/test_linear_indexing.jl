@@ -19,7 +19,7 @@ using Test
         
         # Test getting values with linear indexing
         @test A[1] == 10
-        @test A[2] == 0   # (2, 1) should be zero
+        @test_throws BoundsError A[2]   # (2, 1) is unset
         @test A[3] == 20
         @test A[6] == 30
         
@@ -27,10 +27,10 @@ using Test
         @test_throws BoundsError A[0]
         @test_throws BoundsError A[7]
         
-        # Test setting to default value removes entry
+        # Test setting any value stores it
         A[1] = 0
         @test A[1] == 0
-        @test nnz(A) == 2
+        @test nnz(A) == 3  # All set values are stored
     end
     
     @testset "3D Array Linear Indexing" begin
@@ -46,10 +46,11 @@ using Test
         @test B[2, 2, 2] == 8.0
         @test nnz(B) == 3
         
-        # Verify linear indexing matches CartesianIndex
-        for i in 1:length(B)
-            cart_idx = CartesianIndices(B)[i]
-            @test B[i] == B[cart_idx]
+        # Verify linear indexing matches CartesianIndex for stored values
+        for (cart_idx, val) in stored_pairs(B)
+            linear_idx = LinearIndices(B)[cart_idx]
+            @test B[linear_idx] == B[cart_idx]
+            @test B[linear_idx] == val
         end
     end
     
@@ -61,9 +62,9 @@ using Test
         
         @test C[2] == 20
         @test C[4] == 40
-        @test C[1] == 0
-        @test C[3] == 0
-        @test C[5] == 0
+        @test_throws BoundsError C[1]
+        @test_throws BoundsError C[3]
+        @test_throws BoundsError C[5]
         @test nnz(C) == 2
     end
     
@@ -77,11 +78,11 @@ using Test
             end
         end
         
-        # Verify linear and cartesian indexing give same results
-        linear_idx = 1
-        for cart_idx in CartesianIndices(A)
+        # Verify linear and cartesian indexing give same results for stored values
+        for (cart_idx, val) in stored_pairs(A)
+            linear_idx = LinearIndices(A)[cart_idx]
             @test A[linear_idx] == A[cart_idx]
-            linear_idx += 1
+            @test A[linear_idx] == val
         end
     end
     
@@ -99,12 +100,11 @@ using Test
         cartesian_sum = 0
         
         # This is more of a smoke test than a rigorous benchmark
-        for i in 1:length(A)
-            linear_sum += A[i]
-        end
-        
-        for I in CartesianIndices(A)
-            cartesian_sum += A[I]
+        # Only sum stored values to avoid BoundsError
+        for (cart_idx, val) in stored_pairs(A)
+            linear_idx = LinearIndices(A)[cart_idx]
+            linear_sum += A[linear_idx]
+            cartesian_sum += A[cart_idx]
         end
         
         @test linear_sum == cartesian_sum

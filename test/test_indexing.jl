@@ -15,20 +15,20 @@ using Test
     @test A[1, 1] == 5.0
     @test A[2, 3] == -2.5
     @test A[3, 2] == 1.0
-    @test A[1, 2] == 0.0  # Default value
-    @test A[2, 2] == 0.0  # Default value
+    @test_throws BoundsError A[1, 2]  # Unset index throws error
+    @test_throws BoundsError A[2, 2]  # Unset index throws error
 
     # CartesianIndex access
     @test A[CartesianIndex(1, 1)] == 5.0
-    @test A[CartesianIndex(2, 2)] == 0.0
+    @test_throws BoundsError A[CartesianIndex(2, 2)]  # Unset index throws error
 
     A[CartesianIndex(2, 1)] = 3.0
     @test A[2, 1] == 3.0
 
-    # Setting to default value should remove from storage
+    # Setting any value stores it (no automatic removal)
     A[1, 1] = 0.0
     @test A[1, 1] == 0.0
-    @test nnz(A) == 3  # Should be one less stored element
+    @test nnz(A) == 4  # All set values are stored
 
     # Bounds checking
     @test_throws BoundsError A[0, 1]

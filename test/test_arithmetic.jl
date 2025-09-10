@@ -17,7 +17,7 @@ using Test
         @test C[1, 1] == 8
         @test C[2, 2] == 10
         @test C[3, 3] == 7
-        @test C[1, 2] == 0
+        @test !hasindex(C, 1, 2)
         @test nnz(C) == 3
         
         # Test type promotion
@@ -49,7 +49,7 @@ using Test
         @test C[1, 1] == 7
         @test C[2, 2] == 10
         @test C[3, 3] == -7
-        @test C[1, 2] == 0
+        @test !hasindex(C, 1, 2)
         @test nnz(C) == 3
         
         # Test result with zeros
@@ -59,8 +59,8 @@ using Test
         E[1, 1] = 5
         
         F = D - E
-        @test F[1, 1] == 0
-        @test nnz(F) == 0  # Zero results should not be stored
+        @test !hasindex(F, 1, 1)  # Zero results should not be stored
+        @test nnz(F) == 0
     end
     
     @testset "Scalar Multiplication" begin
@@ -72,7 +72,7 @@ using Test
         B = A * 3
         @test B[1, 1] == 6.0
         @test B[2, 3] == -4.5
-        @test B[1, 2] == 0.0
+        @test !hasindex(B, 1, 2)
         @test nnz(B) == 2
         
         # Test left multiplication
@@ -83,7 +83,7 @@ using Test
         # Test multiplication by zero
         D = A * 0
         @test nnz(D) == 0
-        @test D[1, 1] == 0.0
+        @test !hasindex(D, 1, 1)  # Zero results should not be stored
         
         # Test type promotion
         E = A * 2
