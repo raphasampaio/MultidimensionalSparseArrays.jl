@@ -368,6 +368,11 @@ end
 
 Base.:*(scalar::Number, A::SparseArray) = A * scalar
 
+# Base show method (without MIME) - delegates to text/plain
+function Base.show(io::IO, A::SparseArray{T, N}) where {T, N}
+    show(io, MIME"text/plain"(), A)
+end
+
 # Improved display with better formatting
 function Base.show(io::IO, ::MIME"text/plain", A::SparseArray{T, N}) where {T, N}
     compact = get(io, :compact, false)
