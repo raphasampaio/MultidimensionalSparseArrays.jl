@@ -47,7 +47,7 @@ using Test
     G = SparseArray{Int, 3}(undef, (2, 2, 2))
     @test size(G) == (2, 2, 2)
     @test eltype(G) == Int
-    @test nnz(G) == 0
+    @test nnz(G) == 0 
 end
 
 end
