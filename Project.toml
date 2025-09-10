@@ -1,0 +1,17 @@
+name = "MultidimensionalSparseArrays"
+uuid = "6e93e0f3-59a5-426f-9354-1ff93716b9b4"
+version = "0.1.0"
+
+[deps]
+
+[compat]
+Aqua = "0.8"
+Test = "1.0"
+julia = "1.11"
+
+[extras]
+Aqua = "4c88cf16-eb10-579e-8560-4a9242c79595"
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Aqua", "Test"]
