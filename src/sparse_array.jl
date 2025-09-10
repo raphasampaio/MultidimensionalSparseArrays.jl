@@ -47,7 +47,7 @@ SparseArray{T, N}(::UndefInitializer, dims::NTuple{N, Int}) where {T, N} =
 function SparseArray(A::AbstractArray{T, N}; atol::Real = 0) where {T, N}
     sparse_array = SparseArray{T, N}(size(A))
     zero_val = zero(T)
-    
+
     for I in CartesianIndices(A)
         val = A[I]
         # Only store non-zero values (with tolerance for floating point)
@@ -159,7 +159,6 @@ Return the sparsity ratio (fraction of zero elements) of the array.
 """
 sparsity(A::SparseArray) = 1.0 - nnz(A) / length(A)
 
-
 # Display (basic version - improved version defined later)
 
 # Basic arithmetic operations
@@ -256,16 +255,16 @@ end
 Find all stored indices where function `f` returns true.
 Only searches among explicitly stored values.
 """
-function Base.findall(f::F, A::SparseArray) where {F<:Function}
+function Base.findall(f::F, A::SparseArray) where {F <: Function}
     result = CartesianIndex{ndims(A)}[]
-    
+
     # Check only stored values
     for (idx, val) in A.data
         if f(val)
             push!(result, idx)
         end
     end
-    
+
     return result
 end
 
@@ -283,10 +282,10 @@ Element-wise addition of two sparse arrays.
 """
 function Base.:+(A::SparseArray{T, N}, B::SparseArray{S, N}) where {T, S, N}
     size(A) == size(B) || throw(DimensionMismatch("Array dimensions must match"))
-    
+
     R = promote_type(T, S)
     result = SparseArray{R, N}(size(A))
-    
+
     # Add elements from A
     for (idx, val_a) in A.data
         if haskey(B.data, idx)
@@ -297,7 +296,7 @@ function Base.:+(A::SparseArray{T, N}, B::SparseArray{S, N}) where {T, S, N}
             result.data[idx] = val_a
         end
     end
-    
+
     # Add elements from B that aren't in A
     for (idx, val_b) in B.data
         if !haskey(A.data, idx)
@@ -305,7 +304,7 @@ function Base.:+(A::SparseArray{T, N}, B::SparseArray{S, N}) where {T, S, N}
             result.data[idx] = val_b
         end
     end
-    
+
     return result
 end
 
@@ -316,10 +315,10 @@ Element-wise subtraction of two sparse arrays.
 """
 function Base.:-(A::SparseArray{T, N}, B::SparseArray{S, N}) where {T, S, N}
     size(A) == size(B) || throw(DimensionMismatch("Array dimensions must match"))
-    
+
     R = promote_type(T, S)
     result = SparseArray{R, N}(size(A))
-    
+
     # Subtract elements
     for (idx, val_a) in A.data
         if haskey(B.data, idx)
@@ -333,7 +332,7 @@ function Base.:-(A::SparseArray{T, N}, B::SparseArray{S, N}) where {T, S, N}
             result.data[idx] = val_a
         end
     end
-    
+
     # Handle elements only in B
     for (idx, val_b) in B.data
         if !haskey(A.data, idx)
@@ -344,7 +343,7 @@ function Base.:-(A::SparseArray{T, N}, B::SparseArray{S, N}) where {T, S, N}
             end
         end
     end
-    
+
     return result
 end
 
@@ -356,13 +355,13 @@ Scalar multiplication of sparse array.
 function Base.:*(A::SparseArray{T, N}, scalar::Number) where {T, N}
     S = promote_type(T, typeof(scalar))
     result = SparseArray{S, N}(size(A))
-    
+
     if scalar != 0
         for (idx, val) in A.data
             result.data[idx] = val * scalar
         end
     end
-    
+
     return result
 end
 
@@ -370,35 +369,35 @@ Base.:*(scalar::Number, A::SparseArray) = A * scalar
 
 # Base show method (without MIME) - delegates to text/plain
 function Base.show(io::IO, A::SparseArray{T, N}) where {T, N}
-    show(io, MIME"text/plain"(), A)
+    return show(io, MIME"text/plain"(), A)
 end
 
 # Improved display with better formatting
 function Base.show(io::IO, ::MIME"text/plain", A::SparseArray{T, N}) where {T, N}
     compact = get(io, :compact, false)
-    
+
     if compact
         print(io, "$(size(A)) SparseArray{$T, $N}")
         return
     end
-    
+
     stored_count = nnz(A)
     total_elements = length(A)
-    sparsity_pct = round(sparsity(A) * 100, digits=2)
-    
+    sparsity_pct = round(sparsity(A) * 100, digits = 2)
+
     println(io, "$(size(A)) SparseArray{$T, $N} with $stored_count stored entries:")
     println(io, "  Sparsity: $sparsity_pct% ($(total_elements - stored_count) zeros)")
-    
+
     if stored_count > 0
         # Show up to 10 entries, sorted by index
         sorted_pairs = sort(collect(stored_pairs(A)), by = x -> x[1])
         display_count = min(10, length(sorted_pairs))
-        
+
         for i in 1:display_count
             idx, val = sorted_pairs[i]
             println(io, "  $idx  =>  $val")
         end
-        
+
         if stored_count > 10
             println(io, "  ⋮")
             println(io, "  ($(stored_count - 10) more entries)")
@@ -420,11 +419,11 @@ function dropstored!(A::SparseArray, val)
             push!(to_delete, idx)
         end
     end
-    
+
     for idx in to_delete
         delete!(A.data, idx)
     end
-    
+
     return A
 end
 
@@ -470,7 +469,7 @@ stored_pairs(A::SparseArray) = pairs(A.data)
 
 Convert sparse array to dense array, filling unset indices with zero(T).
 """
-function to_dense(A::SparseArray{T}) where T
+function to_dense(A::SparseArray{T}) where {T}
     dense = fill(zero(T), size(A))
     for (idx, val) in A.data
         dense[idx] = val

@@ -9,10 +9,10 @@ using Test
     @test size(A) == (3, 4)
     @test eltype(A) == Float64
     @test nnz(A) == 0
-    
+
     # Test that unset indices throw errors
     @test_throws BoundsError A[1, 1]
-    
+
     # Test basic functionality
     A[1, 1] = 5.0
     @test A[1, 1] == 5.0
@@ -40,18 +40,18 @@ using Test
     @test E[3, 1] == 2
     @test E[3, 3] == 4
     @test nnz(E) == 4  # Only non-zero elements stored
-    
+
     # Array-like constructor with undef
     F = SparseArray{Float64, 2}(undef, 2, 3)
     @test size(F) == (2, 3)
     @test eltype(F) == Float64
     @test nnz(F) == 0
     # Array starts empty - no values stored
-    
+
     G = SparseArray{Int, 3}(undef, (2, 2, 2))
     @test size(G) == (2, 2, 2)
     @test eltype(G) == Int
-    @test nnz(G) == 0 
+    @test nnz(G) == 0
 end
 
 end
