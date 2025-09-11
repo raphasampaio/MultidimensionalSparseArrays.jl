@@ -485,3 +485,132 @@ Collect only the stored values in the sparse array.
 To get a dense representation, use `to_dense(A)`.
 """
 Base.collect(A::NDSparseArray) = collect(stored_values(A))
+
+# In-place arithmetic operations
+# Julia doesn't have += as a base function - it's syntax sugar for a = a + b
+# We'll create optimized in-place functions that users can call directly
+
+"""
+    add!(A::NDSparseArray, B::NDSparseArray)
+
+In-place addition of sparse array `B` to sparse array `A`.
+Modifies `A` and returns it. More efficient than `A = A + B`.
+"""
+function add!(A::NDSparseArray{T, N}, B::NDSparseArray{S, N}) where {T, S, N}
+    size(A) == size(B) || throw(DimensionMismatch("Array dimensions must match"))
+    
+    # Add elements from B, converting to A's type
+    for (idx, val_b) in B.data
+        if haskey(A.data, idx)
+            # Both arrays have this index
+            A.data[idx] = A.data[idx] + convert(T, val_b)
+        else
+            # Only B has this index (A is effectively zero here)
+            A.data[idx] = convert(T, val_b)
+        end
+    end
+    
+    return A
+end
+
+"""
+    add!(A::NDSparseArray, scalar::Number)
+
+In-place addition of scalar to all stored elements in sparse array `A`.
+More efficient than `A = A + scalar`.
+"""
+function add!(A::NDSparseArray{T}, scalar::Number) where {T}
+    # If scalar is zero, no operation needed
+    if scalar == zero(typeof(scalar))
+        return A
+    end
+    
+    # Add scalar to all stored values, converting to A's type
+    scalar_converted = convert(T, scalar)
+    for (idx, val) in A.data
+        A.data[idx] = val + scalar_converted
+    end
+    
+    return A
+end
+
+"""
+    sub!(A::NDSparseArray, B::NDSparseArray)
+
+In-place subtraction of sparse array `B` from sparse array `A`.
+Modifies `A` and returns it. More efficient than `A = A - B`.
+"""
+function sub!(A::NDSparseArray{T, N}, B::NDSparseArray{S, N}) where {T, S, N}
+    size(A) == size(B) || throw(DimensionMismatch("Array dimensions must match"))
+    
+    # Subtract elements from B, converting to A's type
+    for (idx, val_b) in B.data
+        val_b_converted = convert(T, val_b)
+        if haskey(A.data, idx)
+            # Both arrays have this index
+            new_val = A.data[idx] - val_b_converted
+            if new_val != zero(T)
+                A.data[idx] = new_val
+            else
+                # Remove zero values to maintain sparsity
+                delete!(A.data, idx)
+            end
+        else
+            # Only B has this index (A is effectively zero here)
+            new_val = zero(T) - val_b_converted
+            if new_val != zero(T)
+                A.data[idx] = new_val
+            end
+        end
+    end
+    
+    return A
+end
+
+"""
+    sub!(A::NDSparseArray, scalar::Number)
+
+In-place subtraction of scalar from all stored elements in sparse array `A`.
+More efficient than `A = A - scalar`.
+"""
+function sub!(A::NDSparseArray{T}, scalar::Number) where {T}
+    # If scalar is zero, no operation needed
+    if scalar == zero(typeof(scalar))
+        return A
+    end
+    
+    # Subtract scalar from all stored values, converting to A's type
+    scalar_converted = convert(T, scalar)
+    for (idx, val) in A.data
+        A.data[idx] = val - scalar_converted
+    end
+    
+    return A
+end
+
+"""
+    mul!(A::NDSparseArray, scalar::Number)
+
+In-place scalar multiplication of sparse array `A`.
+More efficient than `A = A * scalar`.
+"""
+function mul!(A::NDSparseArray{T}, scalar::Number) where {T}
+    # If scalar is zero, clear all elements
+    if scalar == zero(typeof(scalar))
+        empty!(A.data)
+        return A
+    end
+    
+    # If scalar is one, no operation needed
+    if scalar == one(typeof(scalar))
+        return A
+    end
+    
+    # Multiply all stored values, converting scalar to A's type
+    scalar_converted = convert(T, scalar)
+    for (idx, val) in A.data
+        A.data[idx] = val * scalar_converted
+    end
+    
+    return A
+end
