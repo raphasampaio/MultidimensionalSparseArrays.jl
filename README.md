@@ -6,26 +6,24 @@
 
 ## Overview
 
-`NDimensionalSparseArrays.jl` provides a `NDSparseArray` type that efficiently stores and manipulates n-dimensional arrays with a high proportion of zero elements. Unlike dense arrays, `NDSparseArray` only stores non-zero values, significantly reducing memory consumption for sparse data.
-
-This package is designed to be a flexible and intuitive tool for scientific computing, data analysis, and any domain where large, sparse n-dimensional data structures are common.
+`NDimensionalSparseArrays.jl` provides an efficient `NDSparseArray` type for working with sparse, n-dimensional arrays. It is designed to store and manipulate arrays with a high proportion of zero elements, reducing memory consumption significantly compared to dense arrays. The package is dependency-free, making it lightweight and easy to integrate into various projects.
 
 ## Features
 
-- **Memory Efficiency:** Only non-zero elements are stored, making it ideal for high-dimensional sparse data.
-- **Arbitrary Dimensionality:** Create sparse arrays of any number of dimensions.
-- **Intuitive Indexing:** Use standard Julia indexing to access and modify elements.
-- **Comprehensive API:** A rich set of functions for creating, manipulating, and analyzing sparse arrays.
-- **Interoperability:** Easily convert between `NDSparseArray` and dense `Array` types.
-- **Arithmetic Operations:** Perform element-wise arithmetic (+, -, *) on sparse arrays.
+- **Memory Efficiency**: Stores only non-zero elements, ideal for high-dimensional sparse data.
+- **Arbitrary Dimensionality**: Handles sparse arrays in any number of dimensions.
+- **No Dependencies**: The package is self-contained, with no external dependencies, ensuring a minimal footprint.
+- **Intuitive Indexing**: Uses standard Julia array indexing for easy access and modification.
+- **Flexible API**: A rich set of functions for creating, manipulating, and analyzing sparse arrays.
+- **Interoperability**: Seamlessly convert between sparse and dense array types.
 
 ## Comparison with `SparseArrays.jl`
 
-`NDimensionalSparseArrays.jl` is designed to provide a flexible and easy-to-use interface for N-dimensional sparse arrays. While Julia's standard library [`SparseArrays.jl`](https://github.com/JuliaSparse/SparseArrays.jl) is highly optimized for 1-D and 2-D sparse arrays (vectors and matrices), `NDimensionalSparseArrays.jl` offers a more general-purpose solution for higher-dimensional sparse data. Key differences include:
+While `SparseArrays.jl` is highly optimized for 1D and 2D sparse arrays (vectors and matrices), `NDimensionalSparseArrays.jl` supports sparse data in **n**-dimensions, providing a more flexible and convenient solution for higher-dimensional use cases. Key differences include:
 
-- **Dimensionality:** `SparseArrays.jl` focuses on `SparseVector` and `SparseMatrixCSC`. `NDimensionalSparseArrays.jl` is built from the ground up for N-dimensional arrays.
-- **Storage Format:** `NDimensionalSparseArrays.jl` uses a dictionary-based storage (`Dict{CartesianIndex{N}, T}`), which is flexible for arbitrary dimensions. `SparseArrays.jl` uses the more rigid but highly efficient Compressed Sparse Column (CSC) format for matrices.
-- **Use Case:** If you are working with 1-D or 2-D sparse arrays and require high-performance linear algebra operations, `SparseArrays.jl` is the ideal choice. If you need to work with sparse data in three or more dimensions, `NDimensionalSparseArrays.jl` provides a more natural and convenient API.
+- **Dimensionality**: `SparseArrays.jl` is limited to 1D and 2D arrays, whereas `NDimensionalSparseArrays.jl` supports arbitrary-dimensional sparse arrays.
+- **Storage Format**: Uses a dictionary-based storage format (`Dict{CartesianIndex{N}, T}`) suitable for any dimensionality, while `SparseArrays.jl` uses Compressed Sparse Column (CSC) format for matrices.
+- **Use Case**: Best for working with higher-dimensional sparse arrays, while `SparseArrays.jl` excels in linear algebra operations for 1D and 2D sparse arrays.
 
 ## Installation
 
@@ -36,8 +34,6 @@ pkg> add NDimensionalSparseArrays
 ## Usage
 
 ### Creating a NDSparseArray
-
-You can create a `NDSparseArray` in several ways:
 
 ```julia
 using NDimensionalSparseArrays
@@ -58,8 +54,6 @@ D = spones(2, 2)
 
 ### Accessing and Modifying Elements
 
-Use standard array indexing to get and set elements. Accessing an unset element will throw a `BoundsError`.
-
 ```julia
 A = NDSparseArray{Float64}(3, 3)
 
@@ -79,8 +73,6 @@ get(A, (1, 2), 0.0) # returns 0.0
 ```
 
 ### Handling Sparsity
-
-Several functions are provided to work with the sparse nature of the array:
 
 ```julia
 # Get the number of non-zero elements
@@ -103,8 +95,6 @@ compress!(B)
 
 ### Arithmetic Operations
 
-Element-wise arithmetic operations are supported:
-
 ```julia
 A = NDSparseArray([1 0; 0 4])
 B = NDSparseArray([0 2; 3 0])
@@ -120,8 +110,6 @@ E = A * 2  # [2 0; 0 8]
 ```
 
 ## API Reference
-
-The following are the key exports of the package:
 
 - `NDSparseArray`: The n-dimensional sparse array type.
 - `nnz`: Get the number of non-zero elements.
