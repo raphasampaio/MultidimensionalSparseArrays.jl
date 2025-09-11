@@ -498,7 +498,7 @@ Modifies `A` and returns it. More efficient than `A = A + B`.
 """
 function add!(A::NDSparseArray{T, N}, B::NDSparseArray{S, N}) where {T, S, N}
     size(A) == size(B) || throw(DimensionMismatch("Array dimensions must match"))
-    
+
     # Add elements from B, converting to A's type
     for (idx, val_b) in B.data
         if haskey(A.data, idx)
@@ -509,7 +509,7 @@ function add!(A::NDSparseArray{T, N}, B::NDSparseArray{S, N}) where {T, S, N}
             A.data[idx] = convert(T, val_b)
         end
     end
-    
+
     return A
 end
 
@@ -530,13 +530,13 @@ function add!(A::NDSparseArray{T}, scalar) where {T}
     catch MethodError
         # zero() not defined for this type, continue with the operation
     end
-    
+
     # Add scalar to all stored values, converting to A's type
     scalar_converted = convert(T, scalar)
     for (idx, val) in A.data
         A.data[idx] = val + scalar_converted
     end
-    
+
     return A
 end
 
@@ -548,7 +548,7 @@ Modifies `A` and returns it. More efficient than `A = A - B`.
 """
 function sub!(A::NDSparseArray{T, N}, B::NDSparseArray{S, N}) where {T, S, N}
     size(A) == size(B) || throw(DimensionMismatch("Array dimensions must match"))
-    
+
     # Subtract elements from B, converting to A's type
     for (idx, val_b) in B.data
         val_b_converted = convert(T, val_b)
@@ -569,7 +569,7 @@ function sub!(A::NDSparseArray{T, N}, B::NDSparseArray{S, N}) where {T, S, N}
             end
         end
     end
-    
+
     return A
 end
 
@@ -590,13 +590,13 @@ function sub!(A::NDSparseArray{T}, scalar) where {T}
     catch MethodError
         # zero() not defined for this type, continue with the operation
     end
-    
+
     # Subtract scalar from all stored values, converting to A's type
     scalar_converted = convert(T, scalar)
     for (idx, val) in A.data
         A.data[idx] = val - scalar_converted
     end
-    
+
     return A
 end
 
@@ -618,7 +618,7 @@ function mul!(A::NDSparseArray{T}, scalar) where {T}
     catch MethodError
         # zero() not defined for this type, continue
     end
-    
+
     try
         if scalar == one(typeof(scalar))
             return A
@@ -626,12 +626,12 @@ function mul!(A::NDSparseArray{T}, scalar) where {T}
     catch MethodError
         # one() not defined for this type, continue
     end
-    
+
     # Multiply all stored values, converting scalar to A's type
     scalar_converted = convert(T, scalar)
     for (idx, val) in A.data
         A.data[idx] = val * scalar_converted
     end
-    
+
     return A
 end
