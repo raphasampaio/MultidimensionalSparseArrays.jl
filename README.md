@@ -1,7 +1,7 @@
 # NDimensionalSparseArrays.jl
 
-[![CI](https://github.com/raphasampaio/NDimensionalSparseArrays.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/raphasampaio/NDimensionalSparseArrays.jl/actions/workflows/CI.yml)
-[![codecov](https://codecov.io/github/raphasampaio/ndimensionalsparsearrays.jl/graph/badge.svg?token=I2kXECoZxZ)](https://codecov.io/github/raphasampaio/ndimensionalsparsearrays.jl)
+[![CI](https://github.com/JuliaSparse/NDimensionalSparseArrays.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/JuliaSparse/NDimensionalSparseArrays.jl/actions/workflows/CI.yml)
+[![codecov](https://codecov.io/github/JuliaSparse/NDimensionalSparseArrays.jl/graph/badge.svg?token=I2kXECoZxZ)](https://codecov.io/github/JuliaSparse/NDimensionalSparseArrays.jl)
 [![Aqua](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
 
 ## Overview
