@@ -4,8 +4,6 @@
 [![codecov](https://codecov.io/github/raphasampaio/multidimensionalsparsearrays.jl/graph/badge.svg?token=I2kXECoZxZ)](https://codecov.io/github/raphasampaio/multidimensionalsparsearrays.jl)
 [![Aqua](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
 
-A Julia package for multidimensional sparse arrays.
-
 ## Overview
 
 `MultidimensionalSparseArrays.jl` provides a `SparseArray` type that efficiently stores and manipulates multidimensional arrays with a high proportion of zero elements. Unlike dense arrays, `SparseArray` only stores non-zero values, significantly reducing memory consumption for sparse data.
@@ -14,7 +12,7 @@ This package is designed to be a flexible and intuitive tool for scientific comp
 
 ## Comparison with `SparseArrays.jl`
 
-`MultidimensionalSparseArrays.jl` is designed to provide a flexible and easy-to-use interface for N-dimensional sparse arrays. While Julia's standard library `SparseArrays.jl` is highly optimized for 1-D and 2-D sparse arrays (vectors and matrices), `MultidimensionalSparseArrays.jl` offers a more general-purpose solution for higher-dimensional sparse data.
+`MultidimensionalSparseArrays.jl` is designed to provide a flexible and easy-to-use interface for N-dimensional sparse arrays. While Julia's standard library [`SparseArrays.jl`](https://github.com/JuliaSparse/SparseArrays.jl) is highly optimized for 1-D and 2-D sparse arrays (vectors and matrices), `MultidimensionalSparseArrays.jl` offers a more general-purpose solution for higher-dimensional sparse data.
 
 Key differences include:
 
@@ -32,8 +30,6 @@ Key differences include:
 - **Arithmetic Operations:** Perform element-wise arithmetic (+, -, *) on sparse arrays.
 
 ## Installation
-
-The package can be installed with the Julia package manager. From the Julia REPL, type `]` to enter the Pkg REPL mode and run:
 
 ```julia
 pkg> add MultidimensionalSparseArrays
@@ -145,16 +141,6 @@ The following are the key exports of the package:
 - `hasindex`: Check for a stored value at an index.
 - `to_dense`: Convert to a dense array.
 
-For more details, please refer to the docstrings of the individual functions.
-
-## Code Formatting
-
-This project uses `JuliaFormatter.jl` to ensure a consistent code style. To format your code locally, run the following command from the root of the project:
-
-```bash
-julia --project=format format/format.jl
-```
-
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a pull request or open an issue.
+Contributions, bug reports, and feature requests are welcome! Feel free to open an issue or submit a pull request.
