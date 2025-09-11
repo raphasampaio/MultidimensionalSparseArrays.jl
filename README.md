@@ -8,8 +8,6 @@
 
 `MultidimensionalSparseArrays.jl` provides a `SparseArray` type that efficiently stores and manipulates multidimensional arrays with a high proportion of zero elements. Unlike dense arrays, `SparseArray` only stores non-zero values, significantly reducing memory consumption for sparse data.
 
-This package is designed to be a flexible and intuitive tool for scientific computing, data analysis, and any domain where large, sparse multidimensional data structures are common.
-
 ## Comparison with `SparseArrays.jl`
 
 `MultidimensionalSparseArrays.jl` is designed to provide a flexible and easy-to-use interface for N-dimensional sparse arrays. While Julia's standard library [`SparseArrays.jl`](https://github.com/JuliaSparse/SparseArrays.jl) is highly optimized for 1-D and 2-D sparse arrays (vectors and matrices), `MultidimensionalSparseArrays.jl` offers a more general-purpose solution for higher-dimensional sparse data.
