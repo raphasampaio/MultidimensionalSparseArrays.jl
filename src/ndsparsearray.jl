@@ -514,15 +514,21 @@ function add!(A::NDSparseArray{T, N}, B::NDSparseArray{S, N}) where {T, S, N}
 end
 
 """
-    add!(A::NDSparseArray, scalar::Number)
+    add!(A::NDSparseArray, scalar)
 
 In-place addition of scalar to all stored elements in sparse array `A`.
 More efficient than `A = A + scalar`.
+Works with any type that supports addition with the array's element type.
 """
-function add!(A::NDSparseArray{T}, scalar::Number) where {T}
-    # If scalar is zero, no operation needed
-    if scalar == zero(typeof(scalar))
-        return A
+function add!(A::NDSparseArray{T}, scalar) where {T}
+    # For generic types, we can't assume zero() exists, so we try to check if it's zero
+    # For most numeric types this will work, for others we'll skip the check
+    try
+        if scalar == zero(typeof(scalar))
+            return A
+        end
+    catch MethodError
+        # zero() not defined for this type, continue with the operation
     end
     
     # Add scalar to all stored values, converting to A's type
@@ -568,15 +574,21 @@ function sub!(A::NDSparseArray{T, N}, B::NDSparseArray{S, N}) where {T, S, N}
 end
 
 """
-    sub!(A::NDSparseArray, scalar::Number)
+    sub!(A::NDSparseArray, scalar)
 
 In-place subtraction of scalar from all stored elements in sparse array `A`.
 More efficient than `A = A - scalar`.
+Works with any type that supports subtraction with the array's element type.
 """
-function sub!(A::NDSparseArray{T}, scalar::Number) where {T}
-    # If scalar is zero, no operation needed
-    if scalar == zero(typeof(scalar))
-        return A
+function sub!(A::NDSparseArray{T}, scalar) where {T}
+    # For generic types, we can't assume zero() exists, so we try to check if it's zero
+    # For most numeric types this will work, for others we'll skip the check
+    try
+        if scalar == zero(typeof(scalar))
+            return A
+        end
+    catch MethodError
+        # zero() not defined for this type, continue with the operation
     end
     
     # Subtract scalar from all stored values, converting to A's type
@@ -589,21 +601,30 @@ function sub!(A::NDSparseArray{T}, scalar::Number) where {T}
 end
 
 """
-    mul!(A::NDSparseArray, scalar::Number)
+    mul!(A::NDSparseArray, scalar)
 
 In-place scalar multiplication of sparse array `A`.
 More efficient than `A = A * scalar`.
+Works with any type that supports multiplication with the array's element type.
 """
-function mul!(A::NDSparseArray{T}, scalar::Number) where {T}
-    # If scalar is zero, clear all elements
-    if scalar == zero(typeof(scalar))
-        empty!(A.data)
-        return A
+function mul!(A::NDSparseArray{T}, scalar) where {T}
+    # For generic types, we can't assume zero() or one() exist, so we try to check
+    # For most numeric types this will work, for others we'll skip the check
+    try
+        if scalar == zero(typeof(scalar))
+            empty!(A.data)
+            return A
+        end
+    catch MethodError
+        # zero() not defined for this type, continue
     end
     
-    # If scalar is one, no operation needed
-    if scalar == one(typeof(scalar))
-        return A
+    try
+        if scalar == one(typeof(scalar))
+            return A
+        end
+    catch MethodError
+        # one() not defined for this type, continue
     end
     
     # Multiply all stored values, converting scalar to A's type

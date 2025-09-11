@@ -342,6 +342,70 @@ using Test
         @test A[2, 2, 2] == 20
         @test A[1, 2, 1] == 14
     end
+    
+    @testset "Generic scalar types" begin
+        # Test with custom numeric type that supports +, -, *
+        struct CustomNumber
+            value::Float64
+        end
+        Base.:+(a::CustomNumber, b::CustomNumber) = CustomNumber(a.value + b.value)
+        Base.:-(a::CustomNumber, b::CustomNumber) = CustomNumber(a.value - b.value)
+        Base.:*(a::CustomNumber, b::CustomNumber) = CustomNumber(a.value * b.value)
+        Base.convert(::Type{CustomNumber}, x::CustomNumber) = x
+        
+        A = NDSparseArray{CustomNumber, 2}((2, 2))
+        A[1, 1] = CustomNumber(5.0)
+        A[2, 2] = CustomNumber(10.0)
+        
+        add!(A, CustomNumber(3.0))
+        
+        @test A[1, 1].value == 8.0
+        @test A[2, 2].value == 13.0
+        @test nnz(A) == 2
+        
+        # Test with rational numbers
+        B = NDSparseArray{Rational{Int}, 2}((2, 2))
+        B[1, 1] = 1//2
+        B[2, 2] = 3//4
+        
+        add!(B, 1//4)
+        
+        @test B[1, 1] == 3//4
+        @test B[2, 2] == 1//1
+        @test nnz(B) == 2
+        
+        # Test with complex numbers and complex scalar
+        C = NDSparseArray{Complex{Int}, 2}((2, 2))
+        C[1, 1] = 2 + 3im
+        C[2, 2] = 1 + 1im
+        
+        add!(C, 1 + 2im)
+        
+        @test C[1, 1] == 3 + 5im
+        @test C[2, 2] == 2 + 3im
+        @test nnz(C) == 2
+        
+        # Test multiplication with rational
+        mul!(B, 2//3)
+        
+        @test B[1, 1] == 1//2  # (3//4) * (2//3) = 1//2
+        @test B[2, 2] == 2//3  # (1//1) * (2//3) = 2//3
+        @test nnz(B) == 2
+    end
+    
+    @testset "Generic type error handling" begin
+        # Test that incompatible types still give sensible errors
+        A = NDSparseArray{Int, 2}((2, 2))
+        A[1, 1] = 5
+        
+        # Test with incompatible scalar type that can't convert
+        struct IncompatibleType
+            value::String
+        end
+        
+        incompatible = IncompatibleType("test")
+        @test_throws MethodError add!(A, incompatible)
+    end
 end
 
 end
