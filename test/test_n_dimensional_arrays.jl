@@ -1,9 +1,9 @@
-module TestMultidimensionalArrays
+module TestNDimensionalArrays
 
 using NDimensionalSparseArrays
 using Test
 
-@testset "Multidimensional Arrays" begin
+@testset "NDimensional Arrays" begin
     # 3D array
     A = NDSparseArray{Float64, 3}((2, 2, 2))
     A[1, 1, 1] = 1.0

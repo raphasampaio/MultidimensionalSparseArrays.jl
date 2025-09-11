@@ -1,7 +1,7 @@
 """
     NDSparseArray{T, N} <: AbstractArray{T, N}
 
-A multidimensional sparse array that stores only explicitly set elements.
+A n-dimensional sparse array that stores only explicitly set elements.
 Accessing unset indices throws a BoundsError.
 
 # Fields

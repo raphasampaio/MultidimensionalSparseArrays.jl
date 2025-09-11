@@ -1,14 +1,14 @@
 # NDimensionalSparseArrays.jl
 
 [![CI](https://github.com/raphasampaio/NDimensionalSparseArrays.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/raphasampaio/NDimensionalSparseArrays.jl/actions/workflows/CI.yml)
-[![codecov](https://codecov.io/github/raphasampaio/multidimensionalsparsearrays.jl/graph/badge.svg?token=I2kXECoZxZ)](https://codecov.io/github/raphasampaio/multidimensionalsparsearrays.jl)
+[![codecov](https://codecov.io/github/raphasampaio/ndimensionalsparsearrays.jl/graph/badge.svg?token=I2kXECoZxZ)](https://codecov.io/github/raphasampaio/ndimensionalsparsearrays.jl)
 [![Aqua](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
 
 ## Overview
 
-`NDimensionalSparseArrays.jl` provides a `NDSparseArray` type that efficiently stores and manipulates multidimensional arrays with a high proportion of zero elements. Unlike dense arrays, `NDSparseArray` only stores non-zero values, significantly reducing memory consumption for sparse data.
+`NDimensionalSparseArrays.jl` provides a `NDSparseArray` type that efficiently stores and manipulates n-dimensional arrays with a high proportion of zero elements. Unlike dense arrays, `NDSparseArray` only stores non-zero values, significantly reducing memory consumption for sparse data.
 
-This package is designed to be a flexible and intuitive tool for scientific computing, data analysis, and any domain where large, sparse multidimensional data structures are common.
+This package is designed to be a flexible and intuitive tool for scientific computing, data analysis, and any domain where large, sparse n-dimensional data structures are common.
 
 ## Features
 
@@ -123,7 +123,7 @@ E = A * 2  # [2 0; 0 8]
 
 The following are the key exports of the package:
 
-- `NDSparseArray`: The multidimensional sparse array type.
+- `NDSparseArray`: The n-dimensional sparse array type.
 - `nnz`: Get the number of non-zero elements.
 - `sparsity`: Get the fraction of zero elements.
 - `stored_indices`, `stored_values`, `stored_pairs`: Iterators for stored elements.
