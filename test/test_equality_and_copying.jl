@@ -5,11 +5,11 @@ using NDimensionalSparseArrays
 using Test
 
 @testset "Equality and Copying" begin
-    A = SparseArray{Int, 2}((3, 3))
+    A = NDSparseArray{Int, 2}((3, 3))
     A[1, 1] = 5
     A[2, 2] = 10
 
-    B = SparseArray{Int, 2}((3, 3))
+    B = NDSparseArray{Int, 2}((3, 3))
     B[1, 1] = 5
     B[2, 2] = 10
 
@@ -20,7 +20,7 @@ using Test
     @test A != B
 
     # Different sizes
-    C = SparseArray{Int, 2}((2, 2))
+    C = NDSparseArray{Int, 2}((2, 2))
     @test A != C
 
     # Copy

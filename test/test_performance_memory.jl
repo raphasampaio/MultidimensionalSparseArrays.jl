@@ -39,7 +39,7 @@ using Test
     end
 
     @testset "dropstored! and compress!" begin
-        A = SparseArray{Float64, 2}((3, 3))
+        A = NDSparseArray{Float64, 2}((3, 3))
         A[1, 1] = 5.0
         A[1, 2] = 0.0  # This is stored like any other value
         A[2, 1] = 3.0
@@ -110,7 +110,7 @@ using Test
     end
 
     @testset "Copy Performance" begin
-        A = SparseArray{Int, 2}((100, 100))
+        A = NDSparseArray{Int, 2}((100, 100))
 
         # Add random sparse elements
         for i in 1:50
@@ -137,8 +137,8 @@ using Test
 
     @testset "Arithmetic Performance" begin
         # Test that arithmetic operations are reasonably efficient
-        A = SparseArray{Int, 2}((100, 100))
-        B = SparseArray{Int, 2}((100, 100))
+        A = NDSparseArray{Int, 2}((100, 100))
+        B = NDSparseArray{Int, 2}((100, 100))
 
         # Add some sparse data
         for i in 1:10
@@ -172,7 +172,7 @@ using Test
     # doesn't support default values - all set values are stored
 
     @testset "Stress Test with Many Operations" begin
-        A = SparseArray{Float64, 2}((50, 50))
+        A = NDSparseArray{Float64, 2}((50, 50))
 
         # Perform many random operations
         for i in 1:1000

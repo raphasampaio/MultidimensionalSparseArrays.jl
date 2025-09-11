@@ -4,7 +4,7 @@ using NDimensionalSparseArrays
 using Test
 
 @testset "Similar" begin
-    A = SparseArray{Float64, 2}((3, 4))
+    A = NDSparseArray{Float64, 2}((3, 4))
     A[1, 1] = 5.0
 
     B = similar(A)

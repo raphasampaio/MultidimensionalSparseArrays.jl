@@ -4,7 +4,7 @@ using NDimensionalSparseArrays
 using Test
 
 @testset "Array Interface" begin
-    A = SparseArray{Int, 2}((2, 3))
+    A = NDSparseArray{Int, 2}((2, 3))
     A[1, 1] = 10
     A[2, 2] = 20
 

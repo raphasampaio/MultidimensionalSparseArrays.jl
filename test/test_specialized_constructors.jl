@@ -83,7 +83,7 @@ using Test
     end
 
     @testset "fill!" begin
-        A = SparseArray{Int, 2}((3, 3))
+        A = NDSparseArray{Int, 2}((3, 3))
         A[1, 1] = 5
         A[2, 2] = 10
         @test nnz(A) == 2
@@ -107,7 +107,7 @@ using Test
     @testset "Dense Array Constructor with Tolerance" begin
         # Test without tolerance (exact comparison)
         dense = [1.0 0.0 3.0; 0.0 0.0 0.0; 2.0 0.0 4.0]
-        A = SparseArray(dense)
+        A = NDSparseArray(dense)
         @test nnz(A) == 4
         @test A[1, 1] == 1.0
         @test A[1, 3] == 3.0
@@ -116,7 +116,7 @@ using Test
 
         # Test with tolerance for floating point
         dense_noisy = [1.0 1e-15 3.0; 1e-16 0.0 0.0; 2.0 0.0 4.0]
-        B = SparseArray(dense_noisy, atol = 1e-14)
+        B = NDSparseArray(dense_noisy, atol = 1e-14)
         @test nnz(B) == 4  # Small values should be treated as zero
         @test B[1, 1] == 1.0
         @test !hasindex(B, 1, 2)  # 1e-15 should be treated as zero (not stored)
@@ -124,12 +124,12 @@ using Test
 
         # Test with larger tolerance
         dense_approx = [1.0 0.001 3.0; 0.0005 0.0 0.0; 2.0 0.0 4.0]
-        C = SparseArray(dense_approx, atol = 0.01)
+        C = NDSparseArray(dense_approx, atol = 0.01)
         @test nnz(C) == 4  # Values < 0.01 should be treated as zero
 
         # Test with integer arrays (should use exact comparison)
         dense_int = [1 0 3; 0 0 0; 2 0 4]
-        D = SparseArray(dense_int, atol = 0.5)  # atol should be ignored for integers
+        D = NDSparseArray(dense_int, atol = 0.5)  # atol should be ignored for integers
         @test nnz(D) == 4
         @test eltype(D) == Int
     end

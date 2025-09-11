@@ -5,7 +5,7 @@ using Test
 
 @testset "Construction" begin
     # Basic construction
-    A = SparseArray{Float64, 2}((3, 4))
+    A = NDSparseArray{Float64, 2}((3, 4))
     @test size(A) == (3, 4)
     @test eltype(A) == Float64
     @test nnz(A) == 0
@@ -21,17 +21,17 @@ using Test
     @test !hasindex(A, 1, 2)
 
     # Convenience constructors
-    C = SparseArray{Float64}((3, 3))
+    C = NDSparseArray{Float64}((3, 3))
     @test size(C) == (3, 3)
     @test eltype(C) == Float64
 
-    D = SparseArray{Int}(2, 3, 4)
+    D = NDSparseArray{Int}(2, 3, 4)
     @test size(D) == (2, 3, 4)
     @test eltype(D) == Int
 
     # Construction from dense array
     dense = [1 0 3; 0 0 0; 2 0 4]
-    E = SparseArray(dense)
+    E = NDSparseArray(dense)
     @test size(E) == (3, 3)
     @test E[1, 1] == 1
     @test !hasindex(E, 1, 2)  # Zero values not stored
@@ -42,13 +42,13 @@ using Test
     @test nnz(E) == 4  # Only non-zero elements stored
 
     # Array-like constructor with undef
-    F = SparseArray{Float64, 2}(undef, 2, 3)
+    F = NDSparseArray{Float64, 2}(undef, 2, 3)
     @test size(F) == (2, 3)
     @test eltype(F) == Float64
     @test nnz(F) == 0
     # Array starts empty - no values stored
 
-    G = SparseArray{Int, 3}(undef, (2, 2, 2))
+    G = NDSparseArray{Int, 3}(undef, (2, 2, 2))
     @test size(G) == (2, 2, 2)
     @test eltype(G) == Int
     @test nnz(G) == 0

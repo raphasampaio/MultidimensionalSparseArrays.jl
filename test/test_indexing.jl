@@ -5,7 +5,7 @@ using NDimensionalSparseArrays
 using Test
 
 @testset "Indexing" begin
-    A = SparseArray{Float64, 2}((3, 3))
+    A = NDSparseArray{Float64, 2}((3, 3))
 
     # Setting values
     A[1, 1] = 5.0

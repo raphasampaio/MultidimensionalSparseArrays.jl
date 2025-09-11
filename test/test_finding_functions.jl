@@ -5,7 +5,7 @@ using Test
 
 @testset "Finding Functions" begin
     @testset "findnz" begin
-        A = SparseArray{Int, 2}((3, 4))
+        A = NDSparseArray{Int, 2}((3, 4))
         A[1, 1] = 5
         A[2, 3] = -2
         A[3, 4] = 10
@@ -26,14 +26,14 @@ using Test
         @test 10 in values
 
         # Test with empty array
-        B = SparseArray{Float64, 2}((2, 2))
+        B = NDSparseArray{Float64, 2}((2, 2))
         indices_empty, values_empty = findnz(B)
         @test length(indices_empty) == 0
         @test length(values_empty) == 0
     end
 
     @testset "findall with functions" begin
-        A = SparseArray{Int, 2}((3, 3))
+        A = NDSparseArray{Int, 2}((3, 3))
         A[1, 1] = 5
         A[1, 2] = -3
         A[2, 2] = 10
@@ -70,7 +70,7 @@ using Test
     end
 
     @testset "findall with different predicates" begin
-        A = SparseArray{Float64, 2}((2, 3))
+        A = NDSparseArray{Float64, 2}((2, 3))
         A[1, 1] = 2.5
         A[1, 3] = -1.5
         A[2, 2] = 0.0  # This is stored like any other value
@@ -98,7 +98,7 @@ using Test
 
     @testset "findall performance with sparse arrays" begin
         # Create a large sparse array
-        A = SparseArray{Int, 2}((100, 100))
+        A = NDSparseArray{Int, 2}((100, 100))
 
         # Add only a few non-zero elements
         A[10, 10] = 100
@@ -119,7 +119,7 @@ using Test
 
     @testset "Edge cases for finding functions" begin
         # Test with 1D array
-        A = SparseArray{Int, 1}((5,))
+        A = NDSparseArray{Int, 1}((5,))
         A[2] = 42
         A[4] = -7
 
@@ -133,7 +133,7 @@ using Test
         @test CartesianIndex(2) in positive_indices
 
         # Test with 3D array
-        B = SparseArray{Float64, 3}((2, 2, 2))
+        B = NDSparseArray{Float64, 3}((2, 2, 2))
         B[1, 1, 1] = 1.0
         B[2, 2, 2] = 8.0
 
@@ -143,7 +143,7 @@ using Test
         @test CartesianIndex(2, 2, 2) in indices_3d
 
         # Test with stored -1 values
-        C = SparseArray{Int, 2}((2, 2))
+        C = NDSparseArray{Int, 2}((2, 2))
         C[1, 1] = 5
         C[2, 2] = -1  # This is stored like any other value
 

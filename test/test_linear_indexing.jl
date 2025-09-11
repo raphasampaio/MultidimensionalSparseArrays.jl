@@ -5,7 +5,7 @@ using Test
 
 @testset "Linear Indexing" begin
     @testset "2D Array Linear Indexing" begin
-        A = SparseArray{Int, 2}((2, 3))
+        A = NDSparseArray{Int, 2}((2, 3))
 
         # Test setting values with linear indexing
         A[1] = 10  # (1, 1)
@@ -34,7 +34,7 @@ using Test
     end
 
     @testset "3D Array Linear Indexing" begin
-        B = SparseArray{Float64, 3}((2, 2, 2))
+        B = NDSparseArray{Float64, 3}((2, 2, 2))
 
         # Test 3D linear indexing (column-major order)
         B[1] = 1.0  # (1, 1, 1)
@@ -55,7 +55,7 @@ using Test
     end
 
     @testset "1D Array Linear Indexing" begin
-        C = SparseArray{Int, 1}((5,))
+        C = NDSparseArray{Int, 1}((5,))
 
         C[2] = 20
         C[4] = 40
@@ -69,7 +69,7 @@ using Test
     end
 
     @testset "Linear Indexing with CartesianIndex Equivalence" begin
-        A = SparseArray{Int, 2}((3, 4))
+        A = NDSparseArray{Int, 2}((3, 4))
 
         # Fill with some test data
         for i in 1:3, j in 1:4
@@ -88,7 +88,7 @@ using Test
 
     @testset "Linear Indexing Performance" begin
         # Test that linear indexing doesn't degrade performance significantly
-        A = SparseArray{Int, 2}((100, 100))
+        A = NDSparseArray{Int, 2}((100, 100))
 
         # Add some sparse data
         for i in 1:10:100

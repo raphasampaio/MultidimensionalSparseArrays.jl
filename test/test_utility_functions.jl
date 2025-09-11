@@ -5,7 +5,7 @@ using NDimensionalSparseArrays
 using Test
 
 @testset "Utility Functions" begin
-    A = SparseArray{Float64, 2}((4, 4))
+    A = NDSparseArray{Float64, 2}((4, 4))
     A[1, 1] = 1.0
     A[2, 3] = 2.0
     A[4, 4] = 3.0

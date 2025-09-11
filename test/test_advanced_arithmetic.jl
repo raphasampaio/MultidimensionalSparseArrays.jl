@@ -6,11 +6,11 @@ using Test
 @testset "Advanced Arithmetic Operations" begin
     @testset "Addition Edge Cases" begin
         # Test addition with completely disjoint sparse patterns
-        A = SparseArray{Int, 2}((3, 3))
+        A = NDSparseArray{Int, 2}((3, 3))
         A[1, 1] = 5
         A[2, 2] = 10
 
-        B = SparseArray{Int, 2}((3, 3))
+        B = NDSparseArray{Int, 2}((3, 3))
         B[1, 3] = 3
         B[3, 1] = 7
 
@@ -24,7 +24,7 @@ using Test
         @test !hasindex(C, 3, 3)
 
         # Test addition with overlapping indices
-        D = SparseArray{Int, 2}((3, 3))
+        D = NDSparseArray{Int, 2}((3, 3))
         D[1, 1] = 2
         D[2, 3] = 8
 
@@ -36,12 +36,12 @@ using Test
     end
 
     @testset "Subtraction with Zero Results" begin
-        A = SparseArray{Int, 2}((3, 3))
+        A = NDSparseArray{Int, 2}((3, 3))
         A[1, 1] = 5
         A[2, 2] = 10
         A[1, 3] = 7
 
-        B = SparseArray{Int, 2}((3, 3))
+        B = NDSparseArray{Int, 2}((3, 3))
         B[1, 1] = 5  # Same as A[1,1] - should result in zero
         B[2, 2] = 3  # Different from A[2,2]
         B[3, 1] = 4  # Not in A
@@ -56,10 +56,10 @@ using Test
 
     @testset "Type Promotion in Arithmetic" begin
         # Int + Float64
-        A = SparseArray{Int, 2}((2, 2))
+        A = NDSparseArray{Int, 2}((2, 2))
         A[1, 1] = 5
 
-        B = SparseArray{Float64, 2}((2, 2))
+        B = NDSparseArray{Float64, 2}((2, 2))
         B[1, 1] = 2.5
         B[2, 2] = 3.7
 
@@ -69,7 +69,7 @@ using Test
         @test C[2, 2] == 3.7
 
         # Int + Complex
-        D = SparseArray{Complex{Float64}, 2}((2, 2))
+        D = NDSparseArray{Complex{Float64}, 2}((2, 2))
         D[1, 1] = 1.0 + 2.0im
 
         E = A + D
@@ -77,10 +77,10 @@ using Test
         @test E[1, 1] == 6.0 + 2.0im
 
         # Rational arithmetic
-        F = SparseArray{Rational{Int}, 2}((2, 2))
+        F = NDSparseArray{Rational{Int}, 2}((2, 2))
         F[1, 1] = 1//3
 
-        G = SparseArray{Rational{Int}, 2}((2, 2))
+        G = NDSparseArray{Rational{Int}, 2}((2, 2))
         G[1, 1] = 1//6
         G[2, 1] = 2//3
 
@@ -90,7 +90,7 @@ using Test
     end
 
     @testset "Scalar Multiplication Edge Cases" begin
-        A = SparseArray{Float64, 2}((3, 3))
+        A = NDSparseArray{Float64, 2}((3, 3))
         A[1, 1] = 2.0
         A[2, 3] = -1.5
         A[3, 2] = 0.0  # Explicitly stored zero
@@ -120,8 +120,8 @@ using Test
 
     @testset "Large Sparse Array Arithmetic" begin
         # Test arithmetic on larger arrays to ensure efficiency
-        A = SparseArray{Float64, 2}((100, 100))
-        B = SparseArray{Float64, 2}((100, 100))
+        A = NDSparseArray{Float64, 2}((100, 100))
+        B = NDSparseArray{Float64, 2}((100, 100))
 
         # Add sparse diagonal pattern
         for i in 1:10:100
@@ -145,11 +145,11 @@ using Test
     end
 
     @testset "Arithmetic with Different Dimensions" begin
-        A = SparseArray{Int, 3}((2, 2, 2))
+        A = NDSparseArray{Int, 3}((2, 2, 2))
         A[1, 1, 1] = 5
         A[2, 2, 2] = 10
 
-        B = SparseArray{Int, 3}((2, 2, 2))
+        B = NDSparseArray{Int, 3}((2, 2, 2))
         B[1, 1, 1] = 3
         B[1, 2, 1] = 7
 
@@ -162,11 +162,11 @@ using Test
 
     @testset "Arithmetic Result Optimization" begin
         # Test that arithmetic operations don't store unnecessary zeros
-        A = SparseArray{Float64, 2}((3, 3))
+        A = NDSparseArray{Float64, 2}((3, 3))
         A[1, 1] = 5.0
         A[2, 2] = 3.0
 
-        B = SparseArray{Float64, 2}((3, 3))
+        B = NDSparseArray{Float64, 2}((3, 3))
         B[1, 1] = 5.0  # Will cancel out in subtraction
         B[3, 3] = 2.0
 
@@ -178,10 +178,10 @@ using Test
     end
 
     @testset "Precision and Floating Point Arithmetic" begin
-        A = SparseArray{Float64, 2}((2, 2))
+        A = NDSparseArray{Float64, 2}((2, 2))
         A[1, 1] = 0.1 + 0.2  # This is 0.30000000000000004 in floating point
 
-        B = SparseArray{Float64, 2}((2, 2))
+        B = NDSparseArray{Float64, 2}((2, 2))
         B[1, 1] = 0.3
 
         C = A - B
@@ -192,15 +192,15 @@ using Test
     end
 
     @testset "Chain Operations" begin
-        A = SparseArray{Int, 2}((3, 3))
+        A = NDSparseArray{Int, 2}((3, 3))
         A[1, 1] = 1
         A[2, 2] = 2
 
-        B = SparseArray{Int, 2}((3, 3))
+        B = NDSparseArray{Int, 2}((3, 3))
         B[1, 1] = 1
         B[1, 3] = 3
 
-        C = SparseArray{Int, 2}((3, 3))
+        C = NDSparseArray{Int, 2}((3, 3))
         C[2, 2] = 1
         C[3, 1] = 4
 

@@ -5,12 +5,12 @@ using Test
 using LinearAlgebra
 
 @testset "AbstractArray Interface Compliance" begin
-    A = SparseArray{Int, 2}((3, 4))
+    A = NDSparseArray{Int, 2}((3, 4))
     A[1, 1] = 5
     A[2, 3] = -2
     A[3, 4] = 10
 
-    # Test that SparseArray is recognized as AbstractArray
+    # Test that NDSparseArray is recognized as AbstractArray
     @test A isa AbstractArray
     @test A isa AbstractArray{Int, 2}
 
@@ -34,7 +34,7 @@ using LinearAlgebra
 end
 
 @testset "Iteration Interface" begin
-    A = SparseArray{Int, 2}((2, 3))
+    A = NDSparseArray{Int, 2}((2, 3))
     A[1, 1] = 10
     A[2, 2] = 20
 
@@ -61,7 +61,7 @@ end
 end
 
 @testset "Broadcasting Compatibility" begin
-    A = SparseArray{Int, 2}((2, 2))
+    A = NDSparseArray{Int, 2}((2, 2))
     A[1, 1] = 5
     A[2, 2] = 10
 
@@ -101,10 +101,10 @@ end
 
 @testset "Type System Integration" begin
     # Test type promotion and conversion
-    A = SparseArray{Int, 2}((2, 2))
+    A = NDSparseArray{Int, 2}((2, 2))
     A[1, 1] = 5
 
-    B = SparseArray{Float64, 2}((2, 2))
+    B = NDSparseArray{Float64, 2}((2, 2))
     B[1, 1] = 2.5
 
     # Test that operations promote types correctly
@@ -123,7 +123,7 @@ end
 
 @testset "Linear Algebra Compatibility" begin
     # Test basic linear algebra operations where applicable
-    A = SparseArray{Float64, 2}((3, 3))
+    A = NDSparseArray{Float64, 2}((3, 3))
     A[1, 1] = 1.0
     A[2, 2] = 2.0
     A[3, 3] = 3.0
@@ -133,7 +133,7 @@ end
     @test diagonal_elements == [1.0, 2.0, 3.0]
 
     # Test transpose by manual implementation using stored values
-    B = SparseArray{Float64, 2}((3, 3))
+    B = NDSparseArray{Float64, 2}((3, 3))
     for (idx, val) in stored_pairs(A)
         i, j = Tuple(idx)
         B[j, i] = val
@@ -183,8 +183,8 @@ end
 
 @testset "Edge Cases and Error Handling" begin
     # Test proper error handling for common mistakes
-    A = SparseArray{Int, 2}((2, 3))
-    B = SparseArray{Int, 2}((3, 2))  # Different size
+    A = NDSparseArray{Int, 2}((2, 3))
+    B = NDSparseArray{Int, 2}((3, 2))  # Different size
 
     # Test dimension mismatch errors
     @test_throws DimensionMismatch A + B
@@ -204,7 +204,7 @@ end
 @testset "Conversion and Construction" begin
     # Test construction from other array types
     dense = [1 0 3; 0 2 0; 0 0 4]
-    sparse = SparseArray(dense)
+    sparse = NDSparseArray(dense)
 
     @test sparse[1, 1] == 1
     @test sparse[2, 2] == 2
@@ -218,7 +218,7 @@ end
 
     # Test with different numeric types
     complex_dense = [1+0im 0+0im; 0+0im 2+3im]
-    complex_sparse = SparseArray(complex_dense)
+    complex_sparse = NDSparseArray(complex_dense)
     @test eltype(complex_sparse) == Complex{Int}
     @test complex_sparse[1, 1] == 1 + 0im
     @test complex_sparse[2, 2] == 2 + 3im

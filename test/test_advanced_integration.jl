@@ -7,13 +7,13 @@ using LinearAlgebra
 @testset "Advanced Integration Tests" begin
     @testset "Linear Algebra Operations" begin
         # Test transpose-like operations manually
-        A = SparseArray{Float64, 2}((3, 4))
+        A = NDSparseArray{Float64, 2}((3, 4))
         A[1, 2] = 1.5
         A[2, 1] = 2.5
         A[3, 4] = 3.5
 
         # Manual transpose
-        AT = SparseArray{Float64, 2}((4, 3))
+        AT = NDSparseArray{Float64, 2}((4, 3))
         for (idx, val) in stored_pairs(A)
             i, j = Tuple(idx)
             AT[j, i] = val
@@ -25,7 +25,7 @@ using LinearAlgebra
         @test nnz(AT) == nnz(A)
 
         # Test diagonal extraction
-        B = SparseArray{Int, 2}((5, 5))
+        B = NDSparseArray{Int, 2}((5, 5))
         for i in 1:5
             B[i, i] = i^2
         end
@@ -40,7 +40,7 @@ using LinearAlgebra
 
     @testset "Matrix-like Properties" begin
         # Test symmetric matrix creation
-        A = SparseArray{Float64, 2}((4, 4))
+        A = NDSparseArray{Float64, 2}((4, 4))
         A[1, 2] = 1.5
         A[2, 1] = 1.5
         A[1, 4] = 2.5
@@ -54,7 +54,7 @@ using LinearAlgebra
         @test A[2, 3] == A[3, 2]
 
         # Test upper/lower triangular patterns
-        U = SparseArray{Int, 2}((4, 4))
+        U = NDSparseArray{Int, 2}((4, 4))
         for i in 1:4, j in i:4
             if i <= j
                 U[i, j] = i + j
@@ -73,7 +73,7 @@ using LinearAlgebra
     end
 
     @testset "Norm-like Operations" begin
-        A = SparseArray{Float64, 2}((3, 3))
+        A = NDSparseArray{Float64, 2}((3, 3))
         A[1, 1] = 3.0
         A[2, 2] = 4.0
         A[3, 3] = 0.0  # Explicitly stored zero
@@ -94,7 +94,7 @@ using LinearAlgebra
     @testset "Structured Matrix Patterns" begin
         # Tridiagonal matrix
         n = 10
-        T = SparseArray{Float64, 2}((n, n))
+        T = NDSparseArray{Float64, 2}((n, n))
 
         for i in 1:n
             T[i, i] = 2.0  # Main diagonal
@@ -113,7 +113,7 @@ using LinearAlgebra
         @test !hasindex(T, 1, 3)
 
         # Circulant-like pattern
-        C = SparseArray{Int, 2}((5, 5))
+        C = NDSparseArray{Int, 2}((5, 5))
         for i in 1:5
             C[i, i] = i
             C[i, (i%5)+1] = i + 10
@@ -126,13 +126,13 @@ using LinearAlgebra
 
     @testset "Advanced Array Transformations" begin
         # Test reshape-like operations (manual implementation)
-        A = SparseArray{Int, 2}((2, 6))
+        A = NDSparseArray{Int, 2}((2, 6))
         A[1, 2] = 10
         A[1, 5] = 20
         A[2, 3] = 30
 
         # Manual "reshape" to 3x4 by mapping indices
-        B = SparseArray{Int, 2}((3, 4))
+        B = NDSparseArray{Int, 2}((3, 4))
         for (old_idx, val) in stored_pairs(A)
             old_linear = LinearIndices((2, 6))[old_idx]
             new_idx = CartesianIndices((3, 4))[old_linear]
@@ -144,7 +144,7 @@ using LinearAlgebra
         @test B[CartesianIndices((3, 4))[LinearIndices((2, 6))[1, 2]]] == 10
 
         # Test permutation-like operations
-        P = SparseArray{Int, 2}((4, 4))
+        P = NDSparseArray{Int, 2}((4, 4))
         P[1, 4] = 1
         P[2, 3] = 1
         P[3, 2] = 1
@@ -160,18 +160,18 @@ using LinearAlgebra
 
     @testset "Kronecker Product-like Operations" begin
         # Manual implementation of Kronecker product for small matrices
-        A = SparseArray{Int, 2}((2, 2))
+        A = NDSparseArray{Int, 2}((2, 2))
         A[1, 1] = 1
         A[1, 2] = 2
         A[2, 1] = 3
         A[2, 2] = 4
 
-        B = SparseArray{Int, 2}((2, 2))
+        B = NDSparseArray{Int, 2}((2, 2))
         B[1, 1] = 5
         B[2, 2] = 6
 
         # Manual Kronecker product A ⊗ B
-        K = SparseArray{Int, 2}((4, 4))
+        K = NDSparseArray{Int, 2}((4, 4))
         for (idx_a, val_a) in stored_pairs(A)
             for (idx_b, val_b) in stored_pairs(B)
                 i_a, j_a = Tuple(idx_a)
@@ -191,7 +191,7 @@ using LinearAlgebra
 
     @testset "Special Matrix Properties" begin
         # Test orthogonal-like matrices
-        Q = SparseArray{Float64, 2}((3, 3))
+        Q = NDSparseArray{Float64, 2}((3, 3))
         Q[1, 1] = 1.0
         Q[2, 2] = cos(π/4)
         Q[2, 3] = -sin(π/4)
@@ -206,7 +206,7 @@ using LinearAlgebra
         @test abs(col2_norm - 1.0) < 1e-10
 
         # Test band matrices
-        B = SparseArray{Int, 2}((5, 5))
+        B = NDSparseArray{Int, 2}((5, 5))
         for i in 1:5, j in 1:5
             if abs(i - j) <= 1  # Bandwidth of 1
                 B[i, j] = i + j
@@ -221,7 +221,7 @@ using LinearAlgebra
 
     @testset "Advanced Sparsity Patterns" begin
         # Checkerboard pattern
-        C = SparseArray{Int, 2}((8, 8))
+        C = NDSparseArray{Int, 2}((8, 8))
         for i in 1:8, j in 1:8
             if (i + j) % 2 == 0
                 C[i, j] = i * j
@@ -233,7 +233,7 @@ using LinearAlgebra
         @test !hasindex(C, 1, 2)  # (1+2) % 2 == 1
 
         # Pseudo-random sparse pattern with specific density (deterministic)
-        R = SparseArray{Float64, 2}((50, 50))
+        R = NDSparseArray{Float64, 2}((50, 50))
         # Add elements in a deterministic pseudo-random pattern
         for i in 1:5:50
             for j in 1:7:50
@@ -247,7 +247,7 @@ using LinearAlgebra
 
     @testset "Numerical Stability Tests" begin
         # Test with very small numbers
-        A = SparseArray{Float64, 2}((3, 3))
+        A = NDSparseArray{Float64, 2}((3, 3))
         A[1, 1] = 1e-100
         A[2, 2] = 1e100
         A[3, 3] = 1.0
@@ -259,7 +259,7 @@ using LinearAlgebra
         @test B[3, 3] == 2.0
 
         # Test with complex numbers
-        C = SparseArray{Complex{Float64}, 2}((2, 2))
+        C = NDSparseArray{Complex{Float64}, 2}((2, 2))
         C[1, 1] = 1e-50 + 1e-50im
         C[2, 2] = 1e50 - 1e50im
 
@@ -271,7 +271,7 @@ using LinearAlgebra
     end
 
     @testset "Integration with Base Functions" begin
-        A = SparseArray{Float64, 2}((4, 4))
+        A = NDSparseArray{Float64, 2}((4, 4))
         A[1, 1] = 1.0
         A[2, 2] = 4.0
         A[3, 3] = 9.0
@@ -301,7 +301,7 @@ using LinearAlgebra
     end
 
     @testset "Custom Reduction Operations" begin
-        A = SparseArray{Int, 2}((3, 4))
+        A = NDSparseArray{Int, 2}((3, 4))
         A[1, 1] = 2
         A[1, 4] = 8
         A[2, 2] = 6

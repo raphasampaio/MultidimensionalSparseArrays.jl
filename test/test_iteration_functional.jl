@@ -5,7 +5,7 @@ using Test
 
 @testset "Iteration and Functional Programming" begin
     @testset "Basic Iteration Over Stored Values" begin
-        A = SparseArray{Int, 2}((3, 4))
+        A = NDSparseArray{Int, 2}((3, 4))
         A[1, 2] = 5
         A[2, 1] = 10
         A[3, 4] = -3
@@ -27,7 +27,7 @@ using Test
     end
 
     @testset "Empty Array Iteration" begin
-        A = SparseArray{Float64, 2}((3, 3))
+        A = NDSparseArray{Float64, 2}((3, 3))
 
         values = collect(A)
         @test length(values) == 0
@@ -43,7 +43,7 @@ using Test
 
     @testset "Iteration with Different Types" begin
         # Complex numbers
-        A = SparseArray{Complex{Float64}, 2}((2, 2))
+        A = NDSparseArray{Complex{Float64}, 2}((2, 2))
         A[1, 1] = 1.0 + 2.0im
         A[2, 2] = -3.0 + 4.0im
 
@@ -53,7 +53,7 @@ using Test
         @test (-3.0 + 4.0im) in values
 
         # Rational numbers
-        B = SparseArray{Rational{Int}, 2}((2, 2))
+        B = NDSparseArray{Rational{Int}, 2}((2, 2))
         B[1, 2] = 1//3
         B[2, 1] = 2//5
 
@@ -63,7 +63,7 @@ using Test
         @test (2//5) in values
 
         # String values
-        C = SparseArray{String, 2}((2, 2))
+        C = NDSparseArray{String, 2}((2, 2))
         C[1, 1] = "hello"
         C[2, 2] = "world"
 
@@ -74,7 +74,7 @@ using Test
     end
 
     @testset "Stored Indices Iteration" begin
-        A = SparseArray{Int, 3}((2, 3, 2))
+        A = NDSparseArray{Int, 3}((2, 3, 2))
         A[1, 1, 1] = 10
         A[2, 3, 1] = 20
         A[1, 2, 2] = 30
@@ -93,7 +93,7 @@ using Test
     end
 
     @testset "Stored Values Iteration" begin
-        A = SparseArray{Float64, 2}((3, 3))
+        A = NDSparseArray{Float64, 2}((3, 3))
         A[1, 1] = 1.5
         A[2, 3] = 2.7
         A[3, 1] = 0.0  # Explicitly stored zero
@@ -111,7 +111,7 @@ using Test
     end
 
     @testset "Stored Pairs Iteration" begin
-        A = SparseArray{Int, 2}((2, 3))
+        A = NDSparseArray{Int, 2}((2, 3))
         A[1, 2] = 42
         A[2, 1] = 17
         A[2, 3] = -5
@@ -126,7 +126,7 @@ using Test
         @test dict[CartesianIndex(2, 3)] == -5
 
         # Test that we can reconstruct the array
-        B = SparseArray{Int, 2}((2, 3))
+        B = NDSparseArray{Int, 2}((2, 3))
         for (idx, val) in stored_pairs(A)
             B[idx] = val
         end
@@ -134,7 +134,7 @@ using Test
     end
 
     @testset "Functional Programming Operations" begin
-        A = SparseArray{Int, 2}((3, 3))
+        A = NDSparseArray{Int, 2}((3, 3))
         A[1, 1] = 2
         A[1, 3] = 4
         A[2, 2] = 6
@@ -163,7 +163,7 @@ using Test
     end
 
     @testset "Enumerate with Stored Values" begin
-        A = SparseArray{String, 2}((2, 2))
+        A = NDSparseArray{String, 2}((2, 2))
         A[1, 1] = "first"
         A[2, 2] = "second"
 
@@ -178,11 +178,11 @@ using Test
     end
 
     @testset "Zip Operations" begin
-        A = SparseArray{Int, 2}((2, 2))
+        A = NDSparseArray{Int, 2}((2, 2))
         A[1, 1] = 1
         A[2, 2] = 4
 
-        B = SparseArray{Int, 2}((2, 2))
+        B = NDSparseArray{Int, 2}((2, 2))
         B[1, 1] = 10
         B[2, 2] = 40
 
@@ -204,7 +204,7 @@ using Test
     end
 
     @testset "Generator Expressions" begin
-        A = SparseArray{Int, 2}((3, 3))
+        A = NDSparseArray{Int, 2}((3, 3))
         A[1, 1] = 1
         A[1, 3] = 3
         A[3, 1] = 5
@@ -223,7 +223,7 @@ using Test
     end
 
     @testset "Iteration State Consistency" begin
-        A = SparseArray{Int, 2}((3, 3))
+        A = NDSparseArray{Int, 2}((3, 3))
         A[1, 1] = 10
         A[2, 2] = 20
         A[3, 3] = 30
@@ -248,7 +248,7 @@ using Test
 
     @testset "Large Array Iteration Performance" begin
         # Test that iteration is efficient for large sparse arrays
-        A = SparseArray{Int, 2}((1000, 1000))
+        A = NDSparseArray{Int, 2}((1000, 1000))
 
         # Add only a few elements to large array
         for i in 1:10

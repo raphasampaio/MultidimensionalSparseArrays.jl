@@ -6,7 +6,7 @@ using Test
 @testset "Memory Management and Performance Edge Cases" begin
     @testset "Memory Efficiency with Large Sparse Arrays" begin
         # Test that large sparse arrays don't consume excessive memory
-        A = SparseArray{Float64, 2}((10^4, 10^4))  # 100M potential elements
+        A = NDSparseArray{Float64, 2}((10^4, 10^4))  # 100M potential elements
         @test size(A) == (10^4, 10^4)
         @test length(A) == 10^8
         @test nnz(A) == 0
@@ -26,7 +26,7 @@ using Test
     end
 
     @testset "Memory Cleanup with dropstored!" begin
-        A = SparseArray{Int, 2}((100, 100))
+        A = NDSparseArray{Int, 2}((100, 100))
 
         # Fill with pattern, then clean up
         for i in 1:50
@@ -52,7 +52,7 @@ using Test
     end
 
     @testset "Memory Cleanup with compress!" begin
-        A = SparseArray{Float64, 2}((50, 50))
+        A = NDSparseArray{Float64, 2}((50, 50))
 
         # Add various values including zeros
         A[1, 1] = 5.0
@@ -74,7 +74,7 @@ using Test
     end
 
     @testset "Copy Performance and Memory Independence" begin
-        A = SparseArray{Int, 2}((100, 100))
+        A = NDSparseArray{Int, 2}((100, 100))
 
         # Add diagonal pattern
         for i in 1:100
@@ -100,7 +100,7 @@ using Test
     end
 
     @testset "Performance with Different Access Patterns" begin
-        A = SparseArray{Float64, 2}((1000, 1000))
+        A = NDSparseArray{Float64, 2}((1000, 1000))
 
         # Test diagonal access pattern (should be efficient)
         for i in 1:100:1000
@@ -130,7 +130,7 @@ using Test
     end
 
     @testset "Memory Usage with fill! Operations" begin
-        A = SparseArray{Int, 2}((100, 100))
+        A = NDSparseArray{Int, 2}((100, 100))
 
         # Initially empty
         @test nnz(A) == 0
@@ -151,8 +151,8 @@ using Test
     end
 
     @testset "Memory Behavior with Arithmetic Operations" begin
-        A = SparseArray{Float64, 2}((500, 500))
-        B = SparseArray{Float64, 2}((500, 500))
+        A = NDSparseArray{Float64, 2}((500, 500))
+        B = NDSparseArray{Float64, 2}((500, 500))
 
         # Create sparse diagonal matrices
         for i in 1:50:500
@@ -186,7 +186,7 @@ using Test
 
     @testset "Performance with High-Dimensional Arrays" begin
         # Test 4D array
-        A = SparseArray{Int, 4}((10, 10, 10, 10))  # 10,000 potential elements
+        A = NDSparseArray{Int, 4}((10, 10, 10, 10))  # 10,000 potential elements
 
         # Add sparse pattern
         for i in 1:2:10
@@ -204,7 +204,7 @@ using Test
     end
 
     @testset "Memory Patterns with Similar Arrays" begin
-        A = SparseArray{Float64, 2}((100, 100))
+        A = NDSparseArray{Float64, 2}((100, 100))
         A[50, 50] = 3.14
 
         # similar should create empty array with same structure
@@ -228,7 +228,7 @@ using Test
     end
 
     @testset "Stress Test: Repeated Operations" begin
-        A = SparseArray{Int, 2}((100, 100))
+        A = NDSparseArray{Int, 2}((100, 100))
 
         # Repeatedly add and remove elements
         for iteration in 1:100
@@ -260,7 +260,7 @@ using Test
         dense1[1, 1] = 1
         dense1[100, 100] = 2
 
-        sparse1 = SparseArray(dense1)
+        sparse1 = NDSparseArray(dense1)
         @test nnz(sparse1) == 2
         @test sparsity(sparse1) > 0.99
 
@@ -270,7 +270,7 @@ using Test
             dense2[i, i] = i
         end
 
-        sparse2 = SparseArray(dense2)
+        sparse2 = NDSparseArray(dense2)
         @test nnz(sparse2) == 10
         @test sparsity(sparse2) == 0.996  # (2500 - 10) / 2500
 
@@ -279,15 +279,15 @@ using Test
         dense3[5, 5] = 1e-16  # Very small value
         dense3[10, 10] = 1.0
 
-        sparse3 = SparseArray(dense3, atol = 1e-15)
+        sparse3 = NDSparseArray(dense3, atol = 1e-15)
         @test nnz(sparse3) == 1  # Small value should be ignored
         @test hasindex(sparse3, 10, 10)
         @test !hasindex(sparse3, 5, 5)
     end
 
     @testset "Edge Case: Empty Operations" begin
-        A = SparseArray{Float64, 2}((10, 10))
-        B = SparseArray{Float64, 2}((10, 10))
+        A = NDSparseArray{Float64, 2}((10, 10))
+        B = NDSparseArray{Float64, 2}((10, 10))
 
         # Operations on empty arrays should remain empty
         C = A + B

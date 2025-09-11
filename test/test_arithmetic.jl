@@ -5,11 +5,11 @@ using Test
 
 @testset "Arithmetic Operations" begin
     @testset "Addition" begin
-        A = SparseArray{Int, 2}((3, 3))
+        A = NDSparseArray{Int, 2}((3, 3))
         A[1, 1] = 5
         A[2, 2] = 10
 
-        B = SparseArray{Int, 2}((3, 3))
+        B = NDSparseArray{Int, 2}((3, 3))
         B[1, 1] = 3
         B[3, 3] = 7
 
@@ -21,9 +21,9 @@ using Test
         @test nnz(C) == 3
 
         # Test type promotion
-        D = SparseArray{Float64, 2}((2, 2))
+        D = NDSparseArray{Float64, 2}((2, 2))
         D[1, 1] = 2.5
-        E = SparseArray{Int, 2}((2, 2))
+        E = NDSparseArray{Int, 2}((2, 2))
         E[1, 1] = 3
 
         F = D + E
@@ -31,16 +31,16 @@ using Test
         @test F[1, 1] == 5.5
 
         # Test dimension mismatch
-        G = SparseArray{Int, 2}((2, 3))
+        G = NDSparseArray{Int, 2}((2, 3))
         @test_throws DimensionMismatch A + G
     end
 
     @testset "Subtraction" begin
-        A = SparseArray{Int, 2}((3, 3))
+        A = NDSparseArray{Int, 2}((3, 3))
         A[1, 1] = 10
         A[2, 2] = 15
 
-        B = SparseArray{Int, 2}((3, 3))
+        B = NDSparseArray{Int, 2}((3, 3))
         B[1, 1] = 3
         B[2, 2] = 5
         B[3, 3] = 7
@@ -53,9 +53,9 @@ using Test
         @test nnz(C) == 3
 
         # Test result with zeros
-        D = SparseArray{Int, 2}((2, 2))
+        D = NDSparseArray{Int, 2}((2, 2))
         D[1, 1] = 5
-        E = SparseArray{Int, 2}((2, 2))
+        E = NDSparseArray{Int, 2}((2, 2))
         E[1, 1] = 5
 
         F = D - E
@@ -64,7 +64,7 @@ using Test
     end
 
     @testset "Scalar Multiplication" begin
-        A = SparseArray{Float64, 2}((3, 3))
+        A = NDSparseArray{Float64, 2}((3, 3))
         A[1, 1] = 2.0
         A[2, 3] = -1.5
 
@@ -94,10 +94,10 @@ using Test
     end
 
     @testset "Mixed Type Operations" begin
-        A = SparseArray{Int, 2}((2, 2))
+        A = NDSparseArray{Int, 2}((2, 2))
         A[1, 1] = 5
 
-        B = SparseArray{Float64, 2}((2, 2))
+        B = NDSparseArray{Float64, 2}((2, 2))
         B[1, 1] = 2.5
         B[2, 2] = 1.0
 
