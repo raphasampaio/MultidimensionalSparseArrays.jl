@@ -121,12 +121,6 @@ D = A - B  # [1 -2; -3 4]
 E = A * 2  # [2 0; 0 8]
 ```
 
-### Utility Functions
-
-- `to_dense(A)`: Convert a `SparseArray` to a dense `Array`.
-- `dropstored!(A, val)`: Remove all stored entries equal to `val`.
-- `spzeros`, `spones`, `spfill`: Create sparse arrays with specific values.
-
 ## API Reference
 
 The following are the key exports of the package:
