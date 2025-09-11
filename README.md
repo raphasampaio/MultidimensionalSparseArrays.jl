@@ -8,16 +8,6 @@
 
 `MultidimensionalSparseArrays.jl` provides a `SparseArray` type that efficiently stores and manipulates multidimensional arrays with a high proportion of zero elements. Unlike dense arrays, `SparseArray` only stores non-zero values, significantly reducing memory consumption for sparse data.
 
-## Comparison with `SparseArrays.jl`
-
-`MultidimensionalSparseArrays.jl` is designed to provide a flexible and easy-to-use interface for N-dimensional sparse arrays. While Julia's standard library [`SparseArrays.jl`](https://github.com/JuliaSparse/SparseArrays.jl) is highly optimized for 1-D and 2-D sparse arrays (vectors and matrices), `MultidimensionalSparseArrays.jl` offers a more general-purpose solution for higher-dimensional sparse data.
-
-Key differences include:
-
-- **Dimensionality:** `SparseArrays.jl` focuses on `SparseVector` and `SparseMatrixCSC`. `MultidimensionalSparseArrays.jl` is built from the ground up for N-dimensional arrays.
-- **Storage Format:** `MultidimensionalSparseArrays.jl` uses a dictionary-based storage (`Dict{CartesianIndex{N}, T}`), which is flexible for arbitrary dimensions. `SparseArrays.jl` uses the more rigid but highly efficient Compressed Sparse Column (CSC) format for matrices.
-- **Use Case:** If you are working with 1-D or 2-D sparse arrays and require high-performance linear algebra operations, `SparseArrays.jl` is the ideal choice. If you need to work with sparse data in three or more dimensions, `MultidimensionalSparseArrays.jl` provides a more natural and convenient API.
-
 ## Features
 
 - **Memory Efficiency:** Only non-zero elements are stored, making it ideal for high-dimensional sparse data.
@@ -26,6 +16,14 @@ Key differences include:
 - **Comprehensive API:** A rich set of functions for creating, manipulating, and analyzing sparse arrays.
 - **Interoperability:** Easily convert between `SparseArray` and dense `Array` types.
 - **Arithmetic Operations:** Perform element-wise arithmetic (+, -, *) on sparse arrays.
+
+## Comparison with `SparseArrays.jl`
+
+`MultidimensionalSparseArrays.jl` is designed to provide a flexible and easy-to-use interface for N-dimensional sparse arrays. While Julia's standard library [`SparseArrays.jl`](https://github.com/JuliaSparse/SparseArrays.jl) is highly optimized for 1-D and 2-D sparse arrays (vectors and matrices), `MultidimensionalSparseArrays.jl` offers a more general-purpose solution for higher-dimensional sparse data. Key differences include:
+
+- **Dimensionality:** `SparseArrays.jl` focuses on `SparseVector` and `SparseMatrixCSC`. `MultidimensionalSparseArrays.jl` is built from the ground up for N-dimensional arrays.
+- **Storage Format:** `MultidimensionalSparseArrays.jl` uses a dictionary-based storage (`Dict{CartesianIndex{N}, T}`), which is flexible for arbitrary dimensions. `SparseArrays.jl` uses the more rigid but highly efficient Compressed Sparse Column (CSC) format for matrices.
+- **Use Case:** If you are working with 1-D or 2-D sparse arrays and require high-performance linear algebra operations, `SparseArrays.jl` is the ideal choice. If you need to work with sparse data in three or more dimensions, `MultidimensionalSparseArrays.jl` provides a more natural and convenient API.
 
 ## Installation
 
