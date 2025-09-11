@@ -1,7 +1,7 @@
 # MultidimensionalSparseArrays.jl
 
-[![CI](https://github.com/gcalderone/MultidimensionalSparseArrays.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/gcalderone/MultidimensionalSparseArrays.jl/actions/workflows/CI.yml)
-[![codecov](https://codecov.io/gh/gcalderone/MultidimensionalSparseArrays.jl/branch/main/graph/badge.svg?token=YOUR_CODECOV_TOKEN)](https://codecov.io/gh/gcalderone/MultidimensionalSparseArrays.jl)
+[![CI](https://github.com/raphasampaio/MultidimensionalSparseArrays.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/raphasampaio/MultidimensionalSparseArrays.jl/actions/workflows/CI.yml)
+[![codecov](https://codecov.io/github/raphasampaio/multidimensionalsparsearrays.jl/graph/badge.svg?token=I2kXECoZxZ)](https://codecov.io/github/raphasampaio/multidimensionalsparsearrays.jl)
 [![Aqua](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
 
 A Julia package for multidimensional sparse arrays.
