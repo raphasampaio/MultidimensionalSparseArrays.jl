@@ -1,24 +1,24 @@
-# MultidimensionalSparseArrays.jl
+# NDimensionalSparseArrays.jl
 
-[![CI](https://github.com/raphasampaio/MultidimensionalSparseArrays.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/raphasampaio/MultidimensionalSparseArrays.jl/actions/workflows/CI.yml)
+[![CI](https://github.com/raphasampaio/NDimensionalSparseArrays.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/raphasampaio/NDimensionalSparseArrays.jl/actions/workflows/CI.yml)
 [![codecov](https://codecov.io/github/raphasampaio/multidimensionalsparsearrays.jl/graph/badge.svg?token=I2kXECoZxZ)](https://codecov.io/github/raphasampaio/multidimensionalsparsearrays.jl)
 [![Aqua](https://raw.githubusercontent.com/JuliaTesting/Aqua.jl/master/badge.svg)](https://github.com/JuliaTesting/Aqua.jl)
 
 ## Overview
 
-`MultidimensionalSparseArrays.jl` provides a `SparseArray` type that efficiently stores and manipulates multidimensional arrays with a high proportion of zero elements. Unlike dense arrays, `SparseArray` only stores non-zero values, significantly reducing memory consumption for sparse data.
+`NDimensionalSparseArrays.jl` provides a `SparseArray` type that efficiently stores and manipulates multidimensional arrays with a high proportion of zero elements. Unlike dense arrays, `SparseArray` only stores non-zero values, significantly reducing memory consumption for sparse data.
 
 This package is designed to be a flexible and intuitive tool for scientific computing, data analysis, and any domain where large, sparse multidimensional data structures are common.
 
 ## Comparison with `SparseArrays.jl`
 
-`MultidimensionalSparseArrays.jl` is designed to provide a flexible and easy-to-use interface for N-dimensional sparse arrays. While Julia's standard library [`SparseArrays.jl`](https://github.com/JuliaSparse/SparseArrays.jl) is highly optimized for 1-D and 2-D sparse arrays (vectors and matrices), `MultidimensionalSparseArrays.jl` offers a more general-purpose solution for higher-dimensional sparse data.
+`NDimensionalSparseArrays.jl` is designed to provide a flexible and easy-to-use interface for N-dimensional sparse arrays. While Julia's standard library [`SparseArrays.jl`](https://github.com/JuliaSparse/SparseArrays.jl) is highly optimized for 1-D and 2-D sparse arrays (vectors and matrices), `NDimensionalSparseArrays.jl` offers a more general-purpose solution for higher-dimensional sparse data.
 
 Key differences include:
 
-- **Dimensionality:** `SparseArrays.jl` focuses on `SparseVector` and `SparseMatrixCSC`. `MultidimensionalSparseArrays.jl` is built from the ground up for N-dimensional arrays.
-- **Storage Format:** `MultidimensionalSparseArrays.jl` uses a dictionary-based storage (`Dict{CartesianIndex{N}, T}`), which is flexible for arbitrary dimensions. `SparseArrays.jl` uses the more rigid but highly efficient Compressed Sparse Column (CSC) format for matrices.
-- **Use Case:** If you are working with 1-D or 2-D sparse arrays and require high-performance linear algebra operations, `SparseArrays.jl` is the ideal choice. If you need to work with sparse data in three or more dimensions, `MultidimensionalSparseArrays.jl` provides a more natural and convenient API.
+- **Dimensionality:** `SparseArrays.jl` focuses on `SparseVector` and `SparseMatrixCSC`. `NDimensionalSparseArrays.jl` is built from the ground up for N-dimensional arrays.
+- **Storage Format:** `NDimensionalSparseArrays.jl` uses a dictionary-based storage (`Dict{CartesianIndex{N}, T}`), which is flexible for arbitrary dimensions. `SparseArrays.jl` uses the more rigid but highly efficient Compressed Sparse Column (CSC) format for matrices.
+- **Use Case:** If you are working with 1-D or 2-D sparse arrays and require high-performance linear algebra operations, `SparseArrays.jl` is the ideal choice. If you need to work with sparse data in three or more dimensions, `NDimensionalSparseArrays.jl` provides a more natural and convenient API.
 
 ## Features
 
@@ -32,7 +32,7 @@ Key differences include:
 ## Installation
 
 ```julia
-pkg> add MultidimensionalSparseArrays
+pkg> add NDimensionalSparseArrays
 ```
 
 ## Usage
@@ -42,7 +42,7 @@ pkg> add MultidimensionalSparseArrays
 You can create a `SparseArray` in several ways:
 
 ```julia
-using MultidimensionalSparseArrays
+using NDimensionalSparseArrays
 
 # Create an empty 3x4x2 sparse array of Float64
 A = SparseArray{Float64}(3, 4, 2)

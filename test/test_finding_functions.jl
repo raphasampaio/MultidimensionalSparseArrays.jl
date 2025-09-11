@@ -1,6 +1,6 @@
 module TestFindingFunctions
 
-using MultidimensionalSparseArrays
+using NDimensionalSparseArrays
 using Test
 
 @testset "Finding Functions" begin

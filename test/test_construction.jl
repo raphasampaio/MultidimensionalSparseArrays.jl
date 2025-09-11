@@ -1,6 +1,6 @@
 module TestConstruction
 
-using MultidimensionalSparseArrays
+using NDimensionalSparseArrays
 using Test
 
 @testset "Construction" begin

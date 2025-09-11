@@ -1,6 +1,6 @@
 module TestErrorHandling
 
-using MultidimensionalSparseArrays
+using NDimensionalSparseArrays
 using Test
 
 @testset "Error Handling and Bounds Checking" begin

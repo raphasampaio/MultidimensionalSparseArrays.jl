@@ -1,6 +1,6 @@
-module MultidimensionalSparseArrays
+module NDimensionalSparseArrays
 
-include("sparse_array.jl")
+include("ndsparsearray.jl")
 
 export SparseArray, nnz, sparsity, stored_indices, stored_values, stored_pairs,
     spzeros, spones, spfill, findnz, dropstored!, compress!, hasindex, to_dense

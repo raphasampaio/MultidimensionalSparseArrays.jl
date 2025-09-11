@@ -1,7 +1,7 @@
 
 module TestEqualityAndCopying
 
-using MultidimensionalSparseArrays
+using NDimensionalSparseArrays
 using Test
 
 @testset "Equality and Copying" begin

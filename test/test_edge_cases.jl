@@ -1,6 +1,6 @@
 module TestEdgeCases
 
-using MultidimensionalSparseArrays
+using NDimensionalSparseArrays
 using Test
 
 @testset "Edge Cases" begin

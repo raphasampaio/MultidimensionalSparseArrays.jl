@@ -1,7 +1,7 @@
 
 module TestIndexing
 
-using MultidimensionalSparseArrays
+using NDimensionalSparseArrays
 using Test
 
 @testset "Indexing" begin

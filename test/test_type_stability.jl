@@ -1,6 +1,6 @@
 module TestTypeStability
 
-using MultidimensionalSparseArrays
+using NDimensionalSparseArrays
 using Test
 
 @testset "Type Stability" begin

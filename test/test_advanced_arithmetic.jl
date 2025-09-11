@@ -1,6 +1,6 @@
 module TestAdvancedArithmetic
 
-using MultidimensionalSparseArrays
+using NDimensionalSparseArrays
 using Test
 
 @testset "Advanced Arithmetic Operations" begin

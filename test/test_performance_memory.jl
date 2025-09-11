@@ -1,6 +1,6 @@
 module TestPerformanceMemory
 
-using MultidimensionalSparseArrays
+using NDimensionalSparseArrays
 using Test
 
 @testset "Performance and Memory Tests" begin

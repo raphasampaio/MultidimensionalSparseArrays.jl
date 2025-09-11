@@ -1,6 +1,6 @@
 module TestMultidimensionalArrays
 
-using MultidimensionalSparseArrays
+using NDimensionalSparseArrays
 using Test
 
 @testset "Multidimensional Arrays" begin

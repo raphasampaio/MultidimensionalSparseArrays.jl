@@ -1,6 +1,6 @@
 module TestDisplay
 
-using MultidimensionalSparseArrays
+using NDimensionalSparseArrays
 using Test
 
 @testset "Display and Show Methods" begin

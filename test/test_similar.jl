@@ -1,6 +1,6 @@
 module TestSimilar
 
-using MultidimensionalSparseArrays
+using NDimensionalSparseArrays
 using Test
 
 @testset "Similar" begin

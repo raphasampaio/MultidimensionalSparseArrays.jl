@@ -1,6 +1,6 @@
 module TestArithmetic
 
-using MultidimensionalSparseArrays
+using NDimensionalSparseArrays
 using Test
 
 @testset "Arithmetic Operations" begin

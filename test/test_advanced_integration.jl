@@ -1,6 +1,6 @@
 module TestAdvancedIntegration
 
-using MultidimensionalSparseArrays
+using NDimensionalSparseArrays
 using Test
 using LinearAlgebra
 

@@ -1,6 +1,6 @@
 module TestIterationFunctional
 
-using MultidimensionalSparseArrays
+using NDimensionalSparseArrays
 using Test
 
 @testset "Iteration and Functional Programming" begin

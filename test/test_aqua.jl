@@ -1,12 +1,12 @@
 module TestAqua
 
 using Aqua
-using MultidimensionalSparseArrays
+using NDimensionalSparseArrays
 using Test
 
 @testset "Aqua" begin
-    Aqua.test_ambiguities(MultidimensionalSparseArrays, recursive = false)
-    Aqua.test_all(MultidimensionalSparseArrays, ambiguities = false)
+    Aqua.test_ambiguities(NDimensionalSparseArrays, recursive = false)
+    Aqua.test_all(NDimensionalSparseArrays, ambiguities = false)
     return nothing
 end
 

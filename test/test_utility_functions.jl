@@ -1,7 +1,7 @@
 
 module TestUtilityFunctions
 
-using MultidimensionalSparseArrays
+using NDimensionalSparseArrays
 using Test
 
 @testset "Utility Functions" begin

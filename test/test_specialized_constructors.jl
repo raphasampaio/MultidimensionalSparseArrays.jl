@@ -1,6 +1,6 @@
 module TestSpecializedConstructors
 
-using MultidimensionalSparseArrays
+using NDimensionalSparseArrays
 using Test
 
 @testset "Specialized Constructors" begin

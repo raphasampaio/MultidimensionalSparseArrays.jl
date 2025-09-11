@@ -1,6 +1,6 @@
 module TestArrayInterface
 
-using MultidimensionalSparseArrays
+using NDimensionalSparseArrays
 using Test
 
 @testset "Array Interface" begin

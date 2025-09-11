@@ -1,6 +1,6 @@
 module TestLinearIndexing
 
-using MultidimensionalSparseArrays
+using NDimensionalSparseArrays
 using Test
 
 @testset "Linear Indexing" begin
