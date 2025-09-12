@@ -64,26 +64,9 @@ function NDSparseArray(A::AbstractArray{T, N}; atol::Real = 0) where {T, N}
     return sparse_array
 end
 
-# Required AbstractArray interface
 Base.size(A::NDSparseArray) = A.dims
-Base.IndexStyle(::Type{<:NDSparseArray}) = IndexCartesian()
 
-# Linear indexing support
-@inline function Base.getindex(A::NDSparseArray, i::Int)
-    @boundscheck checkbounds(A, i)
-    idx = CartesianIndices(A)[i]
-    haskey(A.data, idx) || throw(BoundsError(A, i))
-    return A.data[idx]
-end
-
-@inline function Base.setindex!(A::NDSparseArray, val, i::Int)
-    @boundscheck checkbounds(A, i)
-    idx = CartesianIndices(A)[i]
-    A.data[idx] = val
-    return val
-end
-
-# Indexing
+# Indexing methods
 @inline function Base.getindex(A::NDSparseArray{T, N}, I::Vararg{Int, N}) where {T, N}
     @boundscheck checkbounds(A, I...)
     idx = CartesianIndex(I)
@@ -91,22 +74,10 @@ end
     return A.data[idx]
 end
 
-@inline function Base.getindex(A::NDSparseArray, I::CartesianIndex)
-    @boundscheck checkbounds(A, I)
-    haskey(A.data, I) || throw(BoundsError(A, I))
-    return A.data[I]
-end
-
 @inline function Base.setindex!(A::NDSparseArray{T, N}, val, I::Vararg{Int, N}) where {T, N}
     @boundscheck checkbounds(A, I...)
     idx = CartesianIndex(I)
     A.data[idx] = val
-    return val
-end
-
-@inline function Base.setindex!(A::NDSparseArray, val, I::CartesianIndex)
-    @boundscheck checkbounds(A, I)
-    A.data[I] = val
     return val
 end
 
