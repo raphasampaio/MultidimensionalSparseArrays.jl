@@ -352,7 +352,6 @@ using Test
         Base.:-(a::CustomNumber, b::CustomNumber) = CustomNumber(a.value - b.value)
         Base.:*(a::CustomNumber, b::CustomNumber) = CustomNumber(a.value * b.value)
         Base.convert(::Type{CustomNumber}, x::CustomNumber) = x
-        Base.zero(::Type{CustomNumber}) = CustomNumber(0.0)
         Base.iszero(x::CustomNumber) = iszero(x.value)
 
         A = NDSparseArray{CustomNumber, 2}((2, 2))
