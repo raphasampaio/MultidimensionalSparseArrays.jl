@@ -601,12 +601,8 @@ function mul!(A::NDSparseArray{T}, scalar) where {T}
         return A
     end
 
-    try
-        if scalar == one(typeof(scalar))
-            return A
-        end
-    catch MethodError
-        # one() not defined for this type, continue
+    if isone(scalar)
+        return A
     end
 
     # Multiply all stored values, converting scalar to A's type
